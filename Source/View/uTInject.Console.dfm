@@ -1,7 +1,7 @@
 object FrmConsole: TFrmConsole
-  Left = 0
+  Left = 268
   Height = 519
-  Top = 0
+  Top = 330
   Width = 885
   Caption = 'TInject component'
   ClientHeight = 519
