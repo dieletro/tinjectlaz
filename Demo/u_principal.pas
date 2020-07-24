@@ -3,23 +3,75 @@
 interface
 
 uses
+  {$IFNDEF FPC}
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.ExtCtrls,
+  Vcl.StdCtrls,
+  System.ImageList,
+  Vcl.ImgList,
+  Vcl.AppEvnts,
+  Vcl.ComCtrls,
+  Vcl.Imaging.pngimage,
+  Vcl.Buttons,
+  Vcl.Mask,
+  Data.DB,
+  Vcl.DBCtrls,
+  Vcl.Grids,
+  Vcl.DBGrids,
+  Vcl.Dialogs,
+  Vcl.OleCtrls,
+  SHDocVw,
+  Vcl.Imaging.jpeg,
 
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms,  Vcl.ExtCtrls,
+  //units Opcionais (dependendo do que ira fazer)
+  System.NetEncoding, System.TypInfo,  WinInet,
+  {$ELSE}
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  ExtCtrls,
+  StdCtrls,
+  //ImageList,
+  ImgList,
+  //AppEvnts,
+  ComCtrls,
+  //Vcl.Imaging.pngimage,
+  Buttons,
+  MaskEdit,
+  DB,
+  DBCtrls,
+  Grids,
+  DBGrids,
+  Dialogs,
+  fpjson, jsonparser, jsonscanner,
+  //Vcl.OleCtrls,
+  //SHDocVw,
+  //Vcl.Imaging.jpeg,
+
+  //units Opcionais (dependendo do que ira fazer)
+  Base64, TypInfo,  WinInet,
+  {$ENDIF}
 
   //############ ATENCAO AQUI ####################
   //units adicionais obrigatorias
-   uTInject.ConfigCEF, uTInject,            uTInject.Constant,      uTInject.JS,     uInjectDecryptFile,
-   uTInject.Console,   uTInject.Diversos,   uTInject.AdjustNumber,  uTInject.Config, uTInject.Classes,
+  uTInject.ConfigCEF, uTInject,            uTInject.Constant,      uTInject.JS,     uInjectDecryptFile,
+  uTInject.Console,   uTInject.Diversos,   uTInject.AdjustNumber,  uTInject.Config, uTInject.Classes,
 
-  //units Opcionais (dependendo do que ira fazer)
-   System.NetEncoding, System.TypInfo,  WinInet,
-
-  Vcl.StdCtrls, System.ImageList, Vcl.ImgList, Vcl.AppEvnts, Vcl.ComCtrls,
-  Vcl.Imaging.pngimage, Vcl.Buttons, Vcl.Mask, Data.DB, Vcl.DBCtrls, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Dialogs, IdBaseComponent, IdComponent, IdTCPConnection,
-  IdTCPClient, Vcl.OleCtrls, SHDocVw, IdHTTP, IdIOHandler,
-  IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL, Vcl.Imaging.jpeg;
+  IdBaseComponent, IdComponent, IdTCPConnection,
+  IdTCPClient, IdHTTP, IdIOHandler,
+  IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL;
 
 type
   TfrmPrincipal = class(TForm)
@@ -133,7 +185,7 @@ type
     SpeedButton4: TSpeedButton;
     Label11: TLabel;
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClose(Sender: TObject; var {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
     procedure btSendTextClick(Sender: TObject);
     procedure btSendTextAndFileClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -229,15 +281,25 @@ var
 implementation
 
 uses
-  Datasnap.DBClient, Winapi.ShellAPI, System.AnsiStrings, System.JSON;
-
+  {$IFNDEF FPC}
+    Datasnap.DBClient,
+    Winapi.ShellAPI,
+    System.AnsiStrings,
+    System.JSON;
+  {$ELSE}
+    //Datasnap.DBClient,
+    ShellAPI,
+    strutils; //System.AnsiStrings,
+  {$ENDIF}
 {$R *.dfm}
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 var
   I: Integer;
 begin
-  ReportMemoryLeaksOnShutdown  := false;
+  {$IFNDEF FPC}
+    ReportMemoryLeaksOnShutdown  := false;
+  {$ENDIF}
   PageControl1.ActivePageIndex := 0;
   FIniciando := True;
   try
@@ -306,7 +368,7 @@ begin
   item.ImageIndex := 0;
 end;
 
-procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmPrincipal.FormClose(Sender: TObject; var {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
 begin
   TInject1.ShutDown;
 //  FreeAndNil(GlobalCEFApp);
@@ -408,10 +470,14 @@ end;
 
 
 {procedure TfrmPrincipal.btNewCheckNumberClick(Sender: TObject);
-begin
-
-end;
-
+begin
+
+
+
+end;
+
+
+
  Funcao nao utilizada
 function DownloadArquivo(const Origem, Destino: String): Boolean;
 const BufferSize = 1024;
@@ -475,8 +541,10 @@ begin
 end;
 
 procedure TfrmPrincipal.btGetSeveralStatusClick(Sender: TObject);
-begin
-  try
+begin
+
+  try
+
     FStatus := false;
     if not TInject1.Auth then
        Exit;
@@ -485,40 +553,61 @@ begin
     TInject1.GetStatusContact('558198007759@c.us');
   finally
 
-  end;
-end;
-
+  end;
+
+end;
+
+
+
 procedure TfrmPrincipal.btGetMeClick(Sender: TObject);
-begin
-  try
+begin
+
+  try
+
     if not TInject1.Auth then
        Exit;
 
     TInject1.GetMe();
   finally
 
-  end;
-end;
-
+  end;
+
+end;
+
+
+
 procedure TfrmPrincipal.Button19Click(Sender: TObject);
-begin
-   if not TInject1.Auth then
+begin
+
+   if not TInject1.Auth then
+
      Exit;
 
-  TInject1.GetGroupInviteLink(lbl_idGroup.Caption);//  '558192317066-1592044430@g.us'
-end;
-
+  TInject1.GetGroupInviteLink(lbl_idGroup.Caption);//  '558192317066-1592044430@g.us'
+
+end;
+
+
+
 procedure TfrmPrincipal.btCleanChatClick(Sender: TObject);
-begin
-  if not TInject1.Auth then
+begin
+
+  if not TInject1.Auth then
+
      Exit;
-
-  TInject1.CleanALLChat(ed_num.Text);
-end;
-
+
+
+  TInject1.CleanALLChat(ed_num.Text);
+
+end;
+
+
+
 procedure TfrmPrincipal.btGetStatusClick(Sender: TObject);
-begin
-  try
+begin
+
+  try
+
     FStatus := true;
     if not TInject1.Auth then
        Exit;
@@ -526,11 +615,15 @@ begin
     TInject1.GetStatusContact(ed_num.Text);
   finally
 
-  end;
-end;
-
+  end;
+
+end;
+
+
+
 procedure TfrmPrincipal.btnRemoveGroupLinkClick(Sender: TObject);
-begin   try
+begin
+   try
 
     if not TInject1.Auth then
        Exit;
@@ -538,46 +631,64 @@ begin   try
     TInject1.GroupRemoveInviteLink(lbl_idGroup.Caption);
   finally
 
-  end;
-end;
-
+  end;
+
+end;
+
+
+
 procedure TfrmPrincipal.btSetProfileNameClick(Sender: TObject);
-begin
-  try
+begin
+
+  try
+
     if not TInject1.Auth then
        Exit;
 
     TInject1.SetProfileName(ed_profileData.Text);
   finally
 
-  end;
-end;
-
+  end;
+
+end;
+
+
+
 procedure TfrmPrincipal.btSetProfileStatusClick(Sender: TObject);
-begin
-   try
+begin
+
+   try
+
     if not TInject1.Auth then
        Exit;
 
     TInject1.SetStatus(ed_profileData.Text);
   finally
 
-  end;
-end;
-
+  end;
+
+end;
+
+
+
 procedure TfrmPrincipal.btnTestCheckNumberClick(Sender: TObject);
-begin
- if not TInject1.Auth then
+begin
+
+ if not TInject1.Auth then
+
      Exit;
 
-  TInject1.NewCheckIsValidNumber('558195833533@c.us');
-  TInject1.NewCheckIsValidNumber('558195833532@c.us');
-  TInject1.NewCheckIsValidNumber('558195833531@c.us');
-end;
-
+  TInject1.NewCheckIsValidNumber('558195833533@c.us');
+
+  TInject1.NewCheckIsValidNumber('558195833532@c.us');
+
+  TInject1.NewCheckIsValidNumber('558195833531@c.us');
+
+end;
+
+
+
 procedure TfrmPrincipal.Button1Click(Sender: TObject);
-var
-  JS: string;
 begin
   if (not TInject1.Auth) or (ed_profilePicThumbURL.Text = '') then
        Exit;
@@ -716,12 +827,18 @@ begin
 end;
 
 procedure TfrmPrincipal.ed_numKeyUp(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-  lblContactNumber.Caption := ed_num.Text;
-  lblContactStatus.Caption := '-';
-end;
-
+  Shift: TShiftState);
+
+begin
+
+  lblContactNumber.Caption := ed_num.Text;
+
+  lblContactStatus.Caption := '-';
+
+end;
+
+
+
 procedure TfrmPrincipal.ed_numSelect(Sender: TObject);
 begin
   if not CheckBox5.Checked then
@@ -813,16 +930,25 @@ end;
 procedure TfrmPrincipal.TInject1GetAllGroupContacts(
   const Contacts: TClassAllGroupContacts);
 var
-  JSonValue       : TJSonValue;
-  ArrayRows       : TJSONArray;
+  {$IFNDEF FPC}
+    JSonValue       : TJSonValue;
+  {$ELSE}
+    JSonData        : TJSONData;
+  {$ENDIF}
+    ArrayRows       : TJSONArray;
   i: integer;
 begin
-  JsonValue := TJSonObject.ParseJSONValue(contacts.result);
-  ArrayRows := JsonValue as TJSONArray;
+ {$IFNDEF FPC}
+   JsonValue := TJSonObject.ParseJSONValue(contacts.result);
+   ArrayRows := JsonValue as TJSONArray;
+ {$ELSE}
+   JSonData  := GetJSon(contacts.result);
+   ArrayRows := JSonData as TJSONArray;
+ {$ENDIF}
 
   listaParticipantes.Clear;
 
-  for i := 0 to ArrayRows.Size - 1 do
+  for i := 0 to ArrayRows.{$IFNDEF FPC}Size{$ELSE}Count{$ENDIF}  - 1 do
   begin
     AddGroupContacts(ArrayRows.Items[i].value)
   end;
@@ -866,49 +992,83 @@ begin
 end;
 
 procedure TfrmPrincipal.TInject1GetInviteGroup(const Invite: string);
-begin
- ShowMessage(Invite);
-end;
-
+begin
+
+ ShowMessage(Invite);
+
+end;
+
+
+
 procedure TfrmPrincipal.TInject1GetMe(const vMe: TGetMeClass);
-var aList : TStringList;
-begin
- try
-  aList := TStringList.Create();
-
-  aList.Add('Battery: ' + vME.battery.ToString);
-  aList.Add('LC: ' +  vMe.lc);
-  aList.Add('LG: ' + vMe.lg);
-  aList.Add('Locate: ' + vMe.locate);
-
-  if vMe.plugged then
-   aList.Add('Plugged: true')
-  else
-   aList.Add('Plugged: false');
-
-  aList.Add('Pushname: ' + vMe.pushname);
-  aList.Add('ServerToken: ' + vMe.serverToken);
-  aList.Add('Status: ' + vMe.status.status);
-  aList.Add('Me: ' + vMe.me);
-  aList.Add('Phone Device_Manufacturer:  ' + vMe.phone.device_manufacturer);
-  aList.Add('Phone Device Model: ' + vMe.phone.device_model);
-  aList.Add('Phone MCC: ' + vMe.phone.mcc);
-  aList.Add('Phone MNC: ' + vMe.phone.mnc);
-  aList.Add('Phone OS Builder Number: ' + vMe.phone.os_build_number);
-  aList.Add('Phone OS Version: ' + vMe.phone.os_version);
-  aList.Add('Phone wa Version: ' + vMe.phone.wa_version);
-
-  if vME.phone.InjectWorking then
-   aList.Add('Phone InjectWorkink: true')
-  else
-   aList.Add('Phone InjectWorkin: false');
-
-  Showmessage (aList.Text);
- finally
-  aList.Free;
- end;
-end;
-
+var aList : TStringList;
+
+begin
+
+ try
+
+  aList := TStringList.Create();
+
+  aList.Add('Battery: ' + vME.battery.ToString);
+
+  aList.Add('LC: ' +  vMe.lc);
+
+  aList.Add('LG: ' + vMe.lg);
+
+  aList.Add('Locate: ' + vMe.locate);
+
+
+  if vMe.plugged then
+
+   aList.Add('Plugged: true')
+
+  else
+
+   aList.Add('Plugged: false');
+
+
+  aList.Add('Pushname: ' + vMe.pushname);
+
+  aList.Add('ServerToken: ' + vMe.serverToken);
+
+  aList.Add('Status: ' + vMe.status.status);
+
+  aList.Add('Me: ' + vMe.me);
+
+  aList.Add('Phone Device_Manufacturer:  ' + vMe.phone.device_manufacturer);
+
+  aList.Add('Phone Device Model: ' + vMe.phone.device_model);
+
+  aList.Add('Phone MCC: ' + vMe.phone.mcc);
+
+  aList.Add('Phone MNC: ' + vMe.phone.mnc);
+
+  aList.Add('Phone OS Builder Number: ' + vMe.phone.os_build_number);
+
+  aList.Add('Phone OS Version: ' + vMe.phone.os_version);
+
+  aList.Add('Phone wa Version: ' + vMe.phone.wa_version);
+
+
+  if vME.phone.InjectWorking then
+
+   aList.Add('Phone InjectWorkink: true')
+
+  else
+
+   aList.Add('Phone InjectWorkin: false');
+
+
+  Showmessage (aList.Text);
+
+ finally
+
+  aList.Free;
+
+ end;
+
+end;
+
 procedure TfrmPrincipal.TInject1GetMyNumber(Sender: TObject);
 begin
   lblNumeroConectado.Caption :=   TInject(Sender).MyNumber;
@@ -920,34 +1080,81 @@ var
   LInput: TMemoryStream;
   LOutput: TMemoryStream;
   AStr: TStringList;
-  lThread: TThread;
+  {$IFNDEF FPC}
+    lThread : TThread;
+  {$ENDIF}
+
+  {$IFDEF FPC}
+  procedure ExecJS;
+  Begin
+   try
+     LInput := TMemoryStream.Create;
+     LOutput := TMemoryStream.Create;
+     AStr  := TStringList.Create;
+     AStr.Add(Base64);
+     AStr.SaveToStream(LInput);
+     LInput.Position := 0;
+     with TBase64DecodingStream.Create(LInput) do
+     begin
+       CopyFrom(LOutput, LOutput.Size);
+     end;
+     LOutput.Position := 0;
+     {$IFDEF DELPHI}
+       {$IFDEF CompilerVersion >= 25}
+         Image2.Picture.LoadFromStream(LOutput);
+       {$ELSE}
+         Image2.Picture.Bitmap.LoadFromStream(LOutput);
+       {$ENDIF}
+     {$ELSE}
+       {$IFDEF FPC}
+         Image2.Picture.Bitmap.LoadFromStream(LOutput);
+       {$ENDIF}
+     {$ENDIF}
+   finally
+     LInput.Free;
+     LOutput.Free;
+     AStr.Free;
+   end;
+  end;
+  {$ENDIF}
 begin
-  lThread := TThread.CreateAnonymousThread(
-  procedure
-  begin
-    try
-      LInput := TMemoryStream.Create;
-      LOutput := TMemoryStream.Create;
-      AStr  := TStringList.Create;
-      AStr.Add(Base64);
-      AStr.SaveToStream(LInput);
-      LInput.Position := 0;
-      TNetEncoding.Base64.Decode( LInput, LOutput );
-      LOutput.Position := 0;
-      {$IFDEF VER330}
-        Image2.Picture.LoadFromStream(LOutput);
-      {$ELSE}
-        Image2.Picture.Bitmap.LoadFromStream(LOutput);
-      {$ENDIF}
-    finally
-      LInput.Free;
-      LOutput.Free;
-      AStr.Free;
-    end;
-  end
-  );
-  lThread.FreeOnTerminate := true;
-  lThread.Start;
+ {$IFNDEF FPC}
+ lThread := TThread.CreateAnonymousThread(
+ procedure
+ begin
+   try
+     LInput := TMemoryStream.Create;
+     LOutput := TMemoryStream.Create;
+     AStr  := TStringList.Create;
+     AStr.Add(Base64);
+     AStr.SaveToStream(LInput);
+     LInput.Position := 0;
+     TNetEncoding.Base64.Decode( LInput, LOutput );
+     LOutput.Position := 0;
+     {$IFDEF DELPHI}
+       {$IFDEF CompilerVersion >= 25}
+         Image2.Picture.LoadFromStream(LOutput);
+       {$ELSE}
+         Image2.Picture.Bitmap.LoadFromStream(LOutput);
+       {$ENDIF}
+     {$ENDIF}
+   finally
+     LInput.Free;
+     LOutput.Free;
+     AStr.Free;
+   end;
+ end
+ );
+ lThread.FreeOnTerminate := true;
+ lThread.Start;
+ {$ELSE}
+   with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+     begin
+       FreeOnTerminate := True;
+       Start;
+     end;
+ {$ENDIF}
+
 end;
 
 procedure TfrmPrincipal.TInject1GetQrCode(Const Sender: TObject;  const QrCode: TResultQRCodeClass);
@@ -1027,23 +1234,40 @@ begin
 end;
 
 procedure TfrmPrincipal.TInject1GetStatusMessage(
-  const Result: TResponseStatusMessage);
-var
-  i: integer;
-var
-  AResult: String;
-var
- cara: TResponseStatusMessage;
-begin
-  if FStatus = true then
-  begin
-    lblContactStatus.Caption := Result.status
-  end else
-    begin
-      showmessage(Result.id + ' - ' + Result.status);
-    end;
-end;
-
+  const Result: TResponseStatusMessage);
+
+var
+
+  i: integer;
+
+var
+
+  AResult: String;
+
+var
+
+ cara: TResponseStatusMessage;
+
+begin
+
+  if FStatus = true then
+
+  begin
+
+    lblContactStatus.Caption := Result.status
+
+  end else
+
+    begin
+
+      showmessage(Result.id + ' - ' + Result.status);
+
+    end;
+
+end;
+
+
+
 procedure TfrmPrincipal.TInject1GetUnReadMessages(Const Chats: TChatList);
 var
   AChat: TChatClass;
@@ -1112,21 +1336,35 @@ begin
 end;
 
 procedure TfrmPrincipal.TInject1NewGetNumber(
-  const vCheckNumber: TReturnCheckNumber);
-begin
-
- if vCheckNumber.valid then
-   Showmessage(vCheckNumber.id + ' é um numero Válido')
- else
-   Showmessage(vCheckNumber.id + ' é um numero INVÁLIDO');
-
-end;
-
+  const vCheckNumber: TReturnCheckNumber);
+
+begin
+
+
+
+ if vCheckNumber.valid then
+
+   Showmessage(vCheckNumber.id + ' é um numero Válido')
+
+ else
+
+   Showmessage(vCheckNumber.id + ' é um numero INVÁLIDO');
+
+
+
+end;
+
+
+
 procedure TfrmPrincipal.listaChatsClick(Sender: TObject);
-begin
-  lblContactStatus.caption := '-';
-end;
-
+begin
+
+  lblContactStatus.caption := '-';
+
+end;
+
+
+
 procedure TfrmPrincipal.listaChatsDblClick(Sender: TObject);
 begin
   ed_num.Text := TInject1.GetChat(listaChats.Selected.Index).id;
