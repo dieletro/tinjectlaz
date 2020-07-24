@@ -1,6 +1,6 @@
 ﻿unit uTInject.FrmConfigNetWork;
 
-{$I cef.inc}
+{$I ..\TInjectDiretiva.inc}
 
 interface
 
@@ -57,7 +57,9 @@ implementation
 
 {$R *.dfm}
 
-uses uTInject.Constant, uTInject.Diversos, uTInject.languages, System.UITypes;
+uses
+  {$IFNDEF FPC}System.UITypes,{$ELSE} UITypes,{$ENDIF}
+  uTInject.Constant, uTInject.Diversos, uTInject.languages;
 
 
 procedure TFrmConfigNetWork.BntOkClick(Sender: TObject);

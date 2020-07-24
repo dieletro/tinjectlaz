@@ -25,17 +25,49 @@
 
 unit uTInject;
 
+{$ifdef fpc}
+  {$mode objfpc}{$H+}
+{$endif}
+
 interface
 
 uses
-  uTInject.Classes, uTInject.constant, uTInject.Emoticons, uTInject.Config,
-  uTInject.JS, uTInject.Console,
+  {$IFDEF FPC}
+    LResources,
+    SysUtils,
+    Classes,
+    Forms,
+    Dialogs,
+    MaskUtils,
+    UiTypes,
+    Generics.Collections,
+    TypInfo,
+    DB,
+    ExtCtrls,
+    graphics, //Lazjpeg, //Seria uma substituição
+  {$ELSE}
+    System.SysUtils,
+    System.Classes,
+    Vcl.Forms,
+    Vcl.Dialogs,
+    System.MaskUtils,
+    System.UiTypes,
+    Generics.Collections,
+    System.TypInfo,
+    Data.DB,
+    Vcl.ExtCtrls,
+    Vcl.Imaging.jpeg,
+  {$ENDIF}
+  UBase64,
+  uTInject.Classes,
+  uTInject.constant,
+  uTInject.Emoticons,
+  uTInject.Config,
+  uTInject.JS,
+  uTInject.Console,
   uTInject.languages,
-  uTInject.AdjustNumber, UBase64,
-
-  System.SysUtils, System.Classes, Vcl.Forms, Vcl.Dialogs, System.MaskUtils,
-  System.UiTypes,  Generics.Collections,   System.TypInfo, Data.DB, Vcl.ExtCtrls,
-   uTInject.Diversos, Vcl.Imaging.jpeg;
+  uTInject.AdjustNumber,
+  uTInject.Diversos;
 
 
 type
@@ -91,6 +123,10 @@ type
     procedure SetdjustNumber(const Value: TInjectAdjusteNumber);
     procedure SetInjectJS(const Value: TInjectJS);
     procedure OnDestroyConsole(Sender : TObject);
+
+    //funcoes para threads
+    procedure AProcSincCheckDelivered;
+    procedure AProcCheckDelivered;
 
   protected
     { Protected declarations }
@@ -229,13 +265,22 @@ procedure Register;
 implementation
 
 uses
-  uCEFTypes,   uTInject.ConfigCEF, Winapi.Windows, Winapi.Messages,
-  uCEFConstants, Datasnap.DBClient, Vcl.WinXCtrls, Vcl.Controls, Vcl.StdCtrls,
-  uTInject.FrmQRCode, System.NetEncoding;
+  uCEFTypes,   uTInject.ConfigCEF, Windows, Messages,
+  uCEFConstants,
+  {$ifdef delphi}
+    Datasnap.DBClient, Vcl.WinXCtrls, System.NetEncoding,
+  {$else}
+    base64,
+  {$endif}
+  Controls, StdCtrls,
+  uTInject.FrmQRCode;
 
 
 procedure Register;
 begin
+  {$ifdef fpc}
+    {$I TInject.lrs}
+  {$endif}
   RegisterComponents('TInject', [TInject]);
 end;
 
@@ -266,6 +311,19 @@ begin
   Result := FrmConsole.ConfigureNetWork;
 end; }
 
+
+procedure TInject.AProcSincCheckDelivered;
+begin
+  if Assigned(FrmConsole) then
+     FrmConsole.CheckDelivered;
+end;
+
+procedure TInject.AProcCheckDelivered;
+begin
+  if Config.AutoDelay > 0 then
+     sleep(random(Config.AutoDelay));
+end;
+
 function TInject.CheckDelivered: String;
 var
   lThread : TThread;
@@ -274,7 +332,7 @@ begin
      Exit;
   if not Assigned(FrmConsole) then
      Exit;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
           if Config.AutoDelay > 0 then
@@ -287,6 +345,7 @@ begin
           end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -311,7 +370,7 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumberPhone);
     Exit;
   end;
-
+              {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -322,7 +381,7 @@ begin
           end;
         end);
 
-      end);
+      end);  }
   lThread.Start;
 
 //    if Assigned(FrmConsole) then
@@ -344,7 +403,7 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumberPhone);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -356,6 +415,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 
 //    if Assigned(FrmConsole) then
@@ -381,9 +441,9 @@ begin
         FDestruido                      := False;
         FrmConsole                      := TFrmConsole.Create(nil);
         FrmConsole.OwnerForm            := Self;
-        FrmConsole.OnNotificationCenter := Int_OnNotificationCenter;
+        FrmConsole.OnNotificationCenter := @Int_OnNotificationCenter;
         FrmConsole.MonitorLowBattry     := Assigned(FOnLowBattery);
-        FrmConsole.OnErrorInternal      := Int_OnErroInterno;
+        FrmConsole.OnErrorInternal      := @Int_OnErroInterno;
         FrmConsole.Connect;
       end;
     end;
@@ -399,7 +459,7 @@ begin
   FDestroyTmr                         := Ttimer.Create(nil);
   FDestroyTmr.Enabled                 := False;
   FDestroyTmr.Interval                := 1200;     //Tempo exigido pelo CEF
-  FDestroyTmr.OnTimer                 := OnDestroyConsole;
+  FDestroyTmr.OnTimer                 := @OnDestroyConsole;
 
   FTranslatorInject                   := TTranslatorInject.create;
   FDestruido                          := False;
@@ -415,7 +475,7 @@ begin
         raise Exception.Create(slinebreak + MSG_Except_CefNull);
 
   FInjectConfig                       := TInjectConfig.Create(self);
-  FInjectConfig.OnNotificationCenter  := Int_OnNotificationCenter;
+  FInjectConfig.OnNotificationCenter  := @Int_OnNotificationCenter;
   FInjectConfig.AutoDelay             := 1000;
   FInjectConfig.SecondsMonitor        := 3;
   FInjectConfig.ControlSend           := True;
@@ -424,8 +484,8 @@ begin
 
   FAdjustNumber                    := TInjectAdjusteNumber.Create(self);
   FInjectJS                        := TInjectJS.Create(Self);
-  FInjectJS.OnUpdateJS             := Int_OnUpdateJS;
-  FInjectJS.OnErrorInternal        := Int_OnErroInterno;
+  FInjectJS.OnUpdateJS             := @Int_OnUpdateJS;
+  FInjectJS.OnErrorInternal        := @Int_OnErroInterno;
 end;
 
 procedure TInject.createGroup(PGroupName, PParticipantNumber: string);
@@ -449,7 +509,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PParticipantNumber);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
@@ -464,6 +524,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -523,7 +584,7 @@ begin
      Exit;
   if not Assigned(FrmConsole) then
      Exit;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
           if Config.AutoDelay > 0 then
@@ -536,6 +597,7 @@ begin
           end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -556,7 +618,7 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -568,6 +630,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -586,7 +649,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -598,6 +661,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -618,7 +682,7 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -630,6 +694,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -648,7 +713,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PLinkGroup);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -660,6 +725,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -678,7 +744,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -690,6 +756,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -710,7 +777,7 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -722,6 +789,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -742,7 +810,7 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -754,6 +822,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -842,7 +911,7 @@ begin
   begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
-  end;
+  end;       {
 
   lThread := TThread.CreateAnonymousThread(procedure
       begin
@@ -854,7 +923,7 @@ begin
           end;
         end);
 
-      end);
+      end); }
   lThread.Start;
 end;
 
@@ -922,7 +991,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
   end;
-
+            {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -934,7 +1003,7 @@ begin
           end;
         end);
 
-      end);
+      end);}
   lThread.Start;
 
 end;
@@ -957,7 +1026,7 @@ begin
      Exit;
   if not Assigned(FrmConsole) then
      Exit;
-
+             {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -968,7 +1037,7 @@ begin
           end;
         end);
 
-      end);
+      end); }
   lThread.Start;
 end;
 
@@ -1194,7 +1263,7 @@ begin
   end;
 
 
-  if PTypeHeader in [Th_Connecting, Th_Disconnecting, Th_ConnectingNoPhone, Th_getQrCodeForm, Th_getQrCodeForm, TH_Destroy, Th_Destroying]  then
+  if PTypeHeader in [Th_Connecting, Th_Disconnecting, Th_ConnectingNoPhone, Th_getQrCodeForm, {Th_getQrCodeForm,} TH_Destroy, Th_Destroying]  then
   begin
     case PTypeHeader of
       Th_Connecting            : Fstatus := Server_Connecting;
@@ -1250,7 +1319,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PNumberPhone);
     Exit;
   end;
-
+  {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
@@ -1270,6 +1339,7 @@ begin
         end);
 
       end);
+  }
   lThread.Start;
 end;
 
@@ -1278,8 +1348,13 @@ procedure TInject.SendFile(PNumberPhone: string;
   const PFileName: String; PMessage: string);
 var
   lThread     : TThread;
-  LStream     : TMemoryStream;
-  LBase64File : TBase64Encoding;
+  {$ifdef delphi}
+    LStream     : TMemoryStream;
+    LBase64File : TBase64Encoding;
+  {$else}
+    LStream: TFileStream;
+    VStream: TStringStream;
+  {$endif}
   LExtension  : String;
   LBase64     : String;
 begin
@@ -1301,12 +1376,19 @@ begin
     Int_OnErroInterno(Self, 'SendFile: ' + Format(MSG_ExceptPath, [PNumberPhone]), PNumberPhone);
     Exit;
   end;
-
-  LStream     := TMemoryStream.Create;
-  LBase64File := TBase64Encoding.Create;
+  {$ifdef delphi}
+    LStream     := TMemoryStream.Create;
+    LBase64File := TBase64Encoding.Create;
+  {$else}
+    VStream := TStringStream.Create('');
+  {$endif}
   try
     try
-      LStream.LoadFromFile(PFileName);
+      {$ifdef delphi}
+        LStream.LoadFromFile(PFileName);
+      {$else}
+        LStream := TFileStream.Create(PFileName, fmOpenRead or fmShareDenyWrite);
+      {$endif}
       if LStream.Size = 0 then
       Begin
         Int_OnErroInterno(Self, 'SendFile: ' + Format(MSG_WarningErrorFile, [PNumberPhone]), PNumberPhone);
@@ -1314,16 +1396,30 @@ begin
       end;
 
       LStream.Position := 0;
-      LBase64      := LBase64File.EncodeBytesToString(LStream.Memory, LStream.Size);
+      {$ifdef delphi}
+        LBase64      := LBase64File.EncodeBytesToString(LStream.Memory, LStream.Size);
+      {$else}
+        with TBase64EncodingStream.Create(VStream) do
+          try
+            CopyFrom(LStream, LStream.Size);
+          finally
+            Free;
+          end;
+        LBase64 := VStream.DataString;
+      {$endif}
       LBase64      := StrExtFile_Base64Type(PFileName) + LBase64;
     except
       Int_OnErroInterno(Self, 'SendFile: ' + MSG_ExceptMisc, PNumberPhone);
     end;
   finally
     FreeAndNil(LStream);
-    FreeAndNil(LBase64File);
+    {$ifdef delphi}
+      FreeAndNil(LBase64File);
+    {$else}
+      FreeAndNil(VStream);
+    {$endif}
   end;
-
+           {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
          if Config.AutoDelay > 0 then
@@ -1337,7 +1433,7 @@ begin
             FrmConsole.sendBase64(LBase64, PNumberPhone, PFileName, PMessage);
           end;
         end);
-      end);
+      end);  }
   lThread.Start;
 end;
 
@@ -1368,7 +1464,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PVideoLink);
     Exit;
   end;
-
+       {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
@@ -1383,7 +1479,7 @@ begin
           end;
         end);
 
-      end);
+      end); }
   lThread.Start;
 
 end;
@@ -1415,7 +1511,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PLat+PLng);
     Exit;
   end;
-
+        {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
@@ -1430,7 +1526,7 @@ begin
           end;
         end);
 
-      end);
+      end);  }
   lThread.Start;
 
 end;
@@ -1457,7 +1553,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, vNum);
     Exit;
   end;
-
+        {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
          if Config.AutoDelay > 0 then
@@ -1471,7 +1567,7 @@ begin
             FrmConsole.sendBase64(vBase64, vNum, vFileName, vMess);
           end;
         end);
-      end);
+      end); }
   lThread.Start;
 end;
 
@@ -1497,7 +1593,7 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PNumberPhone);
     Exit;
   end;
-
+      {
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
@@ -1511,7 +1607,7 @@ begin
           end;
         end);
 
-      end);
+      end); }
   lThread.Start;
 end;
 
@@ -1705,7 +1801,7 @@ Var
   LForm  : Tform;
   LPanel1: Tpanel;
   LAbel1 : TLabel;
-  LActivityIndicator1: TActivityIndicator;
+  {$IFNDEF FPC}LActivityIndicator1: TActivityIndicator;{$ENDIF}
 begin
   if PWarning then
   Begin
@@ -1723,21 +1819,27 @@ begin
     LForm.Width                       := 298;
     LForm.Position                    := poScreenCenter;
     LForm.Visible                     := False;
-    LForm.OnCloseQuery                := OnCLoseFrmInt;
+    LForm.OnCloseQuery                := {$IFNDEF FPC}OnCLoseFrmInt{$ELSE}@OnCLoseFrmInt{$ENDIF};
 
     LPanel1                           := Tpanel.Create(LForm);
     LPanel1.Parent                    := LForm;
+    {$IFNDEF FPC}
     LPanel1.ShowCaption               := False;
+    {$ENDIF}
     LPanel1.BevelOuter                := bvNone;
     LPanel1.Width                     := 81;
     LPanel1.Align                     := alLeft;
 
-    LActivityIndicator1               := TActivityIndicator.Create(LPanel1);
-    LActivityIndicator1.Parent        := LPanel1;
-    LActivityIndicator1.IndicatorSize := aisXLarge;
-    LActivityIndicator1.Animate       := True;
-    LActivityIndicator1.Left          := (LPanel1.Width  - LActivityIndicator1.Width)  div 2;
-    LActivityIndicator1.Top           := (LPanel1.Height - LActivityIndicator1.Height) div 2;
+    {$IFNDEF FPC}
+      LActivityIndicator1               := TActivityIndicator.Create(LPanel1);
+      LActivityIndicator1.Parent        := LPanel1;
+      LActivityIndicator1.IndicatorSize := aisXLarge;
+      LActivityIndicator1.Animate       := True;
+      LActivityIndicator1.Left          := (LPanel1.Width  - LActivityIndicator1.Width)  div 2;
+      LActivityIndicator1.Top           := (LPanel1.Height - LActivityIndicator1.Height) div 2;
+    {$ELSE}
+      //
+    {$ENDIF}
 
     LAbel1                            := TLabel.Create(LForm);
     LAbel1.Parent                     := LForm;
@@ -1747,7 +1849,9 @@ begin
     LAbel1.Font.Size                  := 10;
     LAbel1.WordWrap                   := True;
     LAbel1.Caption                    := Text_FrmClose_Label;
+    {$IFNDEF FPC}
     LAbel1.AlignWithMargins           := true;
+    {$ENDIF}
     LForm.Visible                     := True;
     Application.MainForm.Visible      := False;
     LForm.Show;
@@ -1779,7 +1883,7 @@ begin
 
   if Status in [Inject_Destroying, Server_Disconnecting] then
   Begin
-    Application.MessageBox(PWideChar(MSG_WarningQrCodeStart1), PWideChar(Application.Title), MB_ICONERROR + mb_ok);
+    Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(MSG_WarningQrCodeStart1), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
     Exit;
   end;
 
@@ -1787,7 +1891,7 @@ begin
   Begin
     if not ConsolePronto then
     Begin
-      Application.MessageBox(PWideChar(MSG_ConfigCEF_ExceptConsoleNaoPronto), PWideChar(Application.Title), MB_ICONERROR + mb_ok);
+      Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(MSG_ConfigCEF_ExceptConsoleNaoPronto), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
       Exit;
     end;
     //Reseta o FORMULARIO

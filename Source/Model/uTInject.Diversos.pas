@@ -31,7 +31,16 @@ unit uTInject.Diversos;
 interface
 
 uses
-  System.Classes, Vcl.ExtCtrls, System.UITypes;
+  {$IFDEF FPC}
+    Classes,
+    UITypes,
+    ExtCtrls
+  {$ELSE}
+    System.Classes,
+    System.UITypes,
+    Vcl.ExtCtrls
+  {$ENDIF};
+
 
 function PrettyJSON(JsonString: String):String;
 function CaractersWeb(vText: string): string;
@@ -47,8 +56,28 @@ Function  TrazApenasNumeros(PValor:String):String;
 implementation
 
 uses
-  System.JSON, REST.Json, Vcl.Imaging.GIFImg,   Vcl.Graphics, System.NetEncoding, System.SysUtils,
-  Vcl.Imaging.pngimage, Vcl.Dialogs, uTInject.Constant;
+  {$IFDEF FPC}
+    fpjson,              //System.JSON,  //REST.Json,
+    jsonscanner,
+    jsonparser,
+    base64,
+    //Vcl.Imaging.GIFImg,
+    Graphics,
+    //Vcl.Imaging.pngimage,
+    Dialogs,
+   // System.NetEncoding,
+    SysUtils,
+  {$ELSE}
+    System.JSON,
+    REST.Json,
+    Vcl.Imaging.GIFImg,
+    Vcl.Graphics,
+    Vcl.Imaging.pngimage,
+    Vcl.Dialogs,
+    System.NetEncoding,
+    System.SysUtils,
+  {$ENDIF}
+  uTInject.Constant;
 
 Procedure WarningDesenv(Pvalor:String);
 begin
@@ -59,12 +88,23 @@ function PrettyJSON(JsonString: String):String;
 var
   AObj: TJSONObject;
 begin
-  AObj   := TJSONObject.ParseJSONValue(JsonString) as TJSONObject;
-  try
-    result := TJSON.Format(AObj);
-  finally
-    AObj.Free;
-  end;
+  {$ifndef fpc}
+    AObj   := TJSONObject.ParseJSONValue(JsonString) as TJSONObject;
+    try
+      result := TJSON.Format(AObj);
+    finally
+      AObj.Free;
+    end;
+  {$else}
+    with TJSONParser.Create(JsonString, [joUTF8]) do
+    try
+      AObj := Parse as TJSONObject;
+      Result:= AObj.FormatJSON();
+    finally
+      Free;
+      AObj.Free;
+    end;
+  {$endif}
 end;
 
 Function Convert_Base64ToFile(Const PInBase64, FileSaveName: string): Boolean;
@@ -72,6 +112,9 @@ var
   LInput : TMemoryStream;
   LOutput: TMemoryStream;
   stl    : TStringList;
+  {$ifdef fpc}
+    VDecoder: TBase64DecodingStream;
+  {$endif}
 begin
   LInput  := TMemoryStream.Create;
   LOutput := TMemoryStream.Create;
@@ -85,8 +128,12 @@ begin
       LInput.Position  := 0;
       if LInput.Size < 1 then
         Exit;
-
-      TNetEncoding.Base64.Decode( LInput, LOutput );
+      {$ifdef delphi}
+        TNetEncoding.Base64.Decode( LInput, LOutput );
+      {$else}
+        VDecoder := TBase64DecodingStream.Create(LInput, bdmMIME);
+        LOutput.CopyFrom(VDecoder, VDecoder.Size);
+      {$endif}
       if LOutput.Size < 1 then
          Exit;
 
@@ -106,30 +153,64 @@ begin
     FreeAndNil(LInput);
     FreeAndNil(LOutput);
     if FileSaveName <> '' then
-
-    Result := FileExists(FileSaveName);
+      Result := FileExists(FileSaveName);
+    {$ifdef fpc}
+      FreeAndNil(VDecoder);
+    {$endif}
   end;
 end;
 
 function Convert_StrToBase64(vFile: string): string;
 var
-  vFilestream: TMemoryStream;
-  vBase64File: TBase64Encoding;
+  {$ifdef delphi}
+    vFilestream: TMemoryStream;
+    vBase64File: TBase64Encoding;
+  {$endif}
+  {$ifdef fpc}
+    vFilestream: TFileStream;
+    VStream: TStringStream;
+  {$endif}
 begin
-  vBase64File := TBase64Encoding.Create;
-  vFilestream := TMemoryStream.Create;
+  {$ifdef delphi}
+    vBase64File := TBase64Encoding.Create;
+    vFilestream := TMemoryStream.Create;
+  {$else}
+    vFilestream := TFileStream.Create(vFile, fmOpenRead or fmShareDenyWrite);
+    VStream := TStringStream.Create('');
+  {$endif}
   try
-    vFilestream.LoadFromFile(vFile);
-    result :=  vBase64File.EncodeBytesToString(vFilestream.Memory, vFilestream.Size);
+    {$ifdef delphi}
+      vFilestream.LoadFromFile(vFile);
+      result :=  vBase64File.EncodeBytesToString(vFilestream.Memory, vFilestream.Size);
+    {$else}
+      VStream := TStringStream.Create('');
+      try
+        with TBase64EncodingStream.Create(VStream) do
+          try
+            CopyFrom(vFilestream, vFilestream.Size);
+          finally
+            Free;
+          end;
+        Result := VStream.DataString;
+      finally
+        VStream.Free;
+      end;
+    {$endif}
   finally
-    FreeAndNil(vBase64File);
+    {$ifdef delphi}
+      FreeAndNil(vBase64File);
+    {$endif}
     FreeAndNil(vFilestream);
   end;
 end;
 
 function Convert_StrToBase64Stream(Var vMemo: TMemoryStream): string;
 var
-  vBase64File: TBase64Encoding;
+  {$ifdef delphi}
+    vBase64File: TBase64Encoding;
+  {$else}
+    VDestStream: TStringStream;
+  {$endif}
 begin
   Result := '';
   try
@@ -137,12 +218,27 @@ begin
        Exit;
 
     vMemo.Position := 0;
-    vBase64File := TBase64Encoding.Create;
-    try
-      result :=  vBase64File.EncodeBytesToString(vMemo.Memory, vMemo.Size);
-    finally
-      FreeAndNil(vBase64File);
-    end;
+    {$ifdef delphi}
+      vBase64File := TBase64Encoding.Create;
+      try
+        result :=  vBase64File.EncodeBytesToString(vMemo.Memory, vMemo.Size);
+      finally
+        FreeAndNil(vBase64File);
+      end;
+    {$else}
+      VDestStream := TStringStream.Create('');
+      try
+        with TBase64EncodingStream.Create(VDestStream) do
+          try
+            CopyFrom(vMemo, vMemo.Size);
+          finally
+            Free;
+          end;
+        Result := VDestStream.DataString;
+      finally
+        VDestStream.Free;
+      end;
+    {$endif}
   Except
   end;
 end;

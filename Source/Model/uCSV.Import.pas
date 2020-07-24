@@ -27,11 +27,22 @@ unit UCSV.Import;
 interface
 
 uses
-  System.Classes, Vcl.ExtCtrls, System.SysUtils,
-  Data.DB,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  {$IFDEF FPC}
+    Classes,
+    ExtCtrls,
+    SysUtils,
+    BufDataset,
+    db
+  {$ELSE}
+    System.Classes,
+    Vcl.ExtCtrls,
+    System.SysUtils,
+    Data.DB,
+    FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+    FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+    FireDAC.Comp.DataSet, FireDAC.Comp.Client
+  {$ENDIF}
+  ;
 
 Const
   TamPdr = 100;
@@ -40,7 +51,7 @@ Type
   TCSVImport = Class
   Private
     FStringList: TStringList;
-    FRegistros       : TFDMemTable;
+    FRegistros       : {$IFNDEF FPC}TFDMemTable{$ELSE} TBufDataset{TMemDataset}{TZTable}{$ENDIF};
     FSeparador : Char;
     Procedure ZerarTudo;
     Function  CriarCampos: Boolean;
@@ -53,7 +64,7 @@ Type
     Function  ImportarCSV_viaArquivo  (PArquivo:String):Boolean;
     Function  ImportarCSV_viaTexto    (PConteudo:WideString):Boolean;
 
-    Property  Registros:  TFDMemTable Read FRegistros;
+    Property  Registros:  {$IFNDEF FPC}TFDMemTable{$ELSE} TBufDataset{TMemDataset}{TZTable}{$ENDIF} Read FRegistros;
     Property  Separador : Char        Read FSeparador               Write FSeparador;
   End;
 
@@ -61,7 +72,7 @@ Type
 implementation
 
 uses
-  Vcl.Dialogs;
+  {$IFNDEF FPC}Vcl.Dialogs{$ELSE} Dialogs{$ENDIF};
 
 { TCSVImport }
 
@@ -74,16 +85,16 @@ end;
 function TCSVImport.CriarCampos: Boolean;
 Var
   Lok    : Integer;
-  Linha0 : PwideChar;
+  Linha0 : {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF};
   LCampo : String;
   LRetorno: TStringList;
   I: Integer;
 begin
   Result := False;
   LRetorno := TStringList.Create;
-  FRegistros.FieldOptions.AutoCreateMode := acCombineComputed;
+  {$IFNDEF FPC}FRegistros.FieldOptions.AutoCreateMode := acCombineComputed;{$ENDIF}
   try
-    Linha0 := PwideChar(FStringList.Strings[0]);
+    Linha0 := {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(FStringList.Strings[0]);
     Lok    := ExtractStrings([FSeparador],[' '], Linha0, LRetorno);
     try
       if Lok > 0 then
@@ -91,7 +102,11 @@ begin
         for I := 0 to LRetorno.Count -1 do
         Begin
           LCampo := LRetorno.Strings[i];
-          FRegistros.FieldDefs.Add(LCampo,     ftString,      TamPdr, False);
+          {$IFNDEF FPC}
+            FRegistros.FieldDefs.Add(LCampo,     ftString,      TamPdr, False);
+          {$ELSE}
+            FRegistros.FieldDefs.Add(LCampo,     ftString,      TamPdr, False);
+          {$ENDIF}
         End;
         FRegistros.CreateDataSet;
         Result := True;
@@ -107,7 +122,7 @@ end;
 function TCSVImport.CriarValor(PLinha: WideString): Boolean;
 Var
   Lok    : Integer;
-  Linha  : PwideChar;
+  Linha  : {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF};
   LConteudoCampo: WideString;
   LRetorno: TStringList;
   I: Integer;
@@ -120,7 +135,7 @@ begin
       PLinha  := StringReplace(PLinha, (FSeparador + FSeparador), (FSeparador + ' ' + FSeparador), [rfReplaceAll, rfIgnoreCase]);
     End;
 
-    Linha   := PwideChar(PLinha);
+    Linha   := {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(PLinha);
     Lok     := ExtractStrings([FSeparador],[], Linha, LRetorno);
     try
       if Lok > 0 then
@@ -203,7 +218,7 @@ begin
   FreeAndNil(FRegistros);
 
   FStringList      := TStringList.Create;
-  FRegistros       := TFDMemTable.Create(nil);
+  FRegistros       := {$IFNDEF FPC}TFDMemTable{$ELSE} TBufDataset{TMemDataset}{TZTable}{$ENDIF}.Create(nil);
 end;
 
 end.

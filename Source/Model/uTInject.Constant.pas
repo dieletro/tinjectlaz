@@ -29,7 +29,18 @@ unit uTInject.Constant;
 
 interface
 
-Uses Winapi.Messages, System.SysUtils, typinfo, REST.Json;
+Uses
+  {$IFDEF FPC}
+    Messages,
+    SysUtils,
+    fpjson,
+    jsonscanner,
+  {$ELSE}
+    Winapi.Messages,
+    System.SysUtils,
+    REST.Json,
+  {$ENDIF}
+  typinfo;
 
 Const
   //Uso GLOBAL
@@ -50,7 +61,11 @@ Const
   ConfigCEF_Path_Locales          = 'locales';
   ConfigCEF_Path_Cache            = 'cache';
   ConfigCEF_Path_UserData         = 'User Data';
-  JsonOptionClassPadrao           = [joDateIsUTC, joDateFormatISO8601, joIgnoreEmptyStrings, joIgnoreEmptyArrays];
+  {$IFDEF FPC}
+    JsonOptionClassPadrao         = [joUTF8,joStrict,joComments,joIgnoreTrailingComma];
+  {$ELSE}
+    JsonOptionClassPadrao         = [joDateIsUTC, joDateFormatISO8601, joIgnoreEmptyStrings, joIgnoreEmptyArrays];
+  {$ENDIF}
 //  ConsoleRetornText_Disconect     = 'failed: WebSocket is closed before the connection is established';
   FrmConsole_Browser_ContextPhoneOff = '<div class="_1fpj- app-wrapper-web">';
 
@@ -88,8 +103,8 @@ Const
                                         '.then(result => SetConsoleMessage("GetCheckIsValidNumber", JSON.stringify(result)))'+
                                         '.catch(error => SetConsoleMessage("GetCheckIsValidNumber", JSON.stringify(error)));';
   FrmConsole_JS_VAR_IsConnected         = 'window.WAPI.isConnected();';
-  FrmConsole_JS_VAR_ProfilePicThumb     = 'function convertImgToBase64URL(url, callback, outputFormat){ '+
-                                          'var img = new Image();          '+
+  FrmConsole_JS_VAR_ProfilePicThumb     = 'function convertImgToBase64URL(url, callback, outputFormat){ '+
+                                          'var img = new Image();          '+
                                           'img.crossOrigin = "Anonymous";  '+
                                           'img.onload = function(){        '+
                                           '    var canvas = document.createElement("CANVAS"), '+
@@ -104,9 +119,9 @@ Const
                                           'img.src = url;                                     '+
                                           '};';
 
-  FrmConsole_JS_VAR_getProfilePicThumb      = 'window.WAPI.teste("<#PROFILE_PICTHUMB_URL#>");';
+  FrmConsole_JS_VAR_getProfilePicThumb      = 'window.WAPI.teste("<#PROFILE_PICTHUMB_URL#>");';
   FrmConsole_JS_VAR_CreateGroup             = 'window.WAPI.createGroup("<#GROUP_NAME#>", "<#PARTICIPANT_NUMBER#>");setTimeout(function(){ window.WAPI.getAllGroups(); }, 3000);';
-  FrmConsole_JS_GetAllGroups                = 'window.WAPI.getAllGroups();';//'window.WAPI.listMyGroups();';
+  FrmConsole_JS_GetAllGroups                = 'window.WAPI.getAllGroups();';//'window.WAPI.listMyGroups();';
   FrmConsole_JS_GetGroupAdmins              = 'window.WAPI.getGroupAdmins("<#GROUP_ID#>");';
   FrmConsole_JS_VAR_listGroupContacts       = 'window.WAPI.getGroupParticipantIDs("<#GROUP_ID#>");';
   FrmConsole_JS_VAR_groupAddParticipant     = 'window.WAPI.addParticipant("<#GROUP_ID#>", "<#PARTICIPANT_NUMBER#>");setTimeout(function(){ window.WAPI.getGroupParticipantIDs("<#GROUP_ID#>"); }, 3000);';
@@ -270,7 +285,18 @@ type
 implementation
 
 uses
-  System.JSON, System.Classes, Vcl.Dialogs, Vcl.Forms, Winapi.Windows;
+  {$IFDEF FPC}
+    Classes,
+    Dialogs,
+    Forms,
+    Windows
+  {$ELSE}
+    System.JSON,
+    System.Classes,
+    Vcl.Dialogs,
+    Vcl.Forms,
+    Winapi.Windows
+  {$ENDIF};
 
 
 Function VerificaCompatibilidadeVersao(PVersaoExterna:String; PversaoInterna:String):Boolean;
@@ -286,8 +312,8 @@ Begin
     PVersaoExterna   := StringReplace(PVersaoExterna, ',', '.',    [rfReplaceAll, rfIgnoreCase]);
     PversaoInterna   := StringReplace(PversaoInterna, ',', '.',    [rfReplaceAll, rfIgnoreCase]);
 
-    ExtractStrings(['.'],[], PWideChar(PversaoInterna), LVersionInt);
-    ExtractStrings(['.'],[], PWideChar(PVersaoExterna), LVersionExt);
+    ExtractStrings(['.'],[], {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(PversaoInterna), LVersionInt);
+    ExtractStrings(['.'],[], {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(PVersaoExterna), LVersionExt);
     for I := 0 to LVersionInt.count -1 do
       LInt := LInt + Copy(LVersionInt.Strings[i] + '00000000', 0, Versao0porCasas);
 

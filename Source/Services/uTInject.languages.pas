@@ -28,10 +28,12 @@
 ####################################################################################################################
 }
 unit uTInject.languages;
-
+{$ifdef fpc}
+  {$mode delphi}
+{$endif}
 interface
 
-uses uTInject.Constant, Winapi.Windows, System.Classes;
+uses uTInject.Constant, Windows, Classes;
 
 Type
 
@@ -58,7 +60,7 @@ var
   POldProtect: DWORD;
 begin
   VirtualProtect(xOldResourceString, SizeOf(xOldResourceString^), PAGE_EXECUTE_READWRITE, @POldProtect);
-  xOldResourceString^.Identifier := Integer(xValueChanged);
+  {$ifdef delphi} xOldResourceString^.Identifier := Integer(xValueChanged);{$endif}
   VirtualProtect(xOldResourceString,SizeOf(xOldResourceString^),POldProtect, @POldProtect);
 end;
 

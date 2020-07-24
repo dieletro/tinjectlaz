@@ -34,7 +34,7 @@ interface
 
 {$WARN SYMBOL_PLATFORM OFF}
 uses
-  System.Classes,  SysUtils,  Windows,
+  Classes,  SysUtils,  Windows,
   {$IFDEF DESIGNER_COMP}
     ToolsAPI,
   {$ENDIF}
@@ -54,7 +54,11 @@ Type
      Function FindInterno(ADirRoot: String; PFile:String):String;
 
   Public
-    constructor Create(Owner: TComponent); override;
+    {$ifdef delphi}
+      constructor Create(Owner: TComponent); override;
+    {$else}
+      constructor Create(AOwner: TComponent); override;
+    {$endif}
     Function FindDirs(ADirRoot: String; PFile:String):String;
     Property LocalEXE: String       Read FLocalEXE;
     Property LocalProject: String   Read FLocalProject;
@@ -64,7 +68,7 @@ Type
 implementation
 
 uses
-  Vcl.Forms,  Vcl.Dialogs, uTInject.Diversos;
+  Forms,  Dialogs, uTInject.Diversos;
 
 
 
@@ -122,8 +126,11 @@ begin
   end;
 end;
 
-
-constructor TDadosApp.Create;
+{$ifdef delphi}
+  constructor TDadosApp.Create(Owner: TComponent);
+{$else}
+  constructor TDadosApp.Create(AOwner: TComponent);
+{$endif}
 begin
   //Se estiver em modo DESIGNER tem que catar o local
   //Esta rodando a APLICAção

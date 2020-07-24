@@ -33,7 +33,7 @@ unit uTInject.Config;
 interface
 
 uses
-  System.Classes, uTInject.Classes, uTInject.Diversos;
+  Classes, uTInject.Classes, uTInject.Diversos;
 
 {$M+}{$TYPEINFO ON}
 Type
@@ -84,7 +84,8 @@ Type
 implementation
 
 uses
-  System.SysUtils, uTInject.Constant, Vcl.Forms, uTInject.ExePath,
+  SysUtils, Forms,
+  uTInject.Constant, uTInject.ExePath,
   uTInject.ConfigCEF, uTInject;
 
 { TInjectConfig }

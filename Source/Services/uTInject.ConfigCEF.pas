@@ -28,6 +28,18 @@
 ####################################################################################################################
 }
 
+{$MODE DELPHI}{$H+}
+{$MACRO ON}
+{$COPERATORS ON}
+{$DEFINE CUSTOM_DICTIONARY_CONSTRAINTS := TKey, TValue, THashFactory}
+{$DEFINE OPEN_ADDRESSING_CONSTRAINTS := TKey, TValue, THashFactory, TProbeSequence}
+{$DEFINE CUCKOO_CONSTRAINTS := TKey, TValue, THashFactory, TCuckooCfg}
+{$DEFINE TREE_CONSTRAINTS := TKey, TValue, TInfo}
+{$WARNINGS OFF}
+{$HINTS OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+
 ///CEF DOCUMENTAÇÃO
 //https://www.briskbard.com/index.php?lang=en&pageid=cef
 unit uTInject.ConfigCEF;
@@ -35,19 +47,30 @@ unit uTInject.ConfigCEF;
 interface
 
 uses
-  System.Classes,
-  System.SysUtils,
-  Winapi.Windows,
-  Vcl.Forms,
+  {$IFDEF FPC}
+    Classes,
+    SysUtils,
+    Windows,
+    Forms,
+    ExtCtrls,
+  {$ELSE}
+    System.Classes,
+    System.SysUtils,
+    Winapi.Windows,
+    Vcl.Forms,
+    Vcl.ExtCtrls,
+  {$ENDIF}
   DateUtils,
   IniFiles,
-  uCEFApplication, uCEFConstants,
+  uCEFApplication,
+  uCEFConstants,
   uCEFChromium,
-
   uTInject,
-  uTInject.constant, Vcl.ExtCtrls, uTInject.Classes ;
+  uTInject.Constant,
+  uTInject.Classes ;
 
-
+{.$define EXTRA_WARNINGS}
+{.$define ENABLE_METHODS_WITH_TEnumerableWithPointers}
 
 type
 
@@ -127,7 +150,7 @@ var
 implementation
 
 uses
-  uCEFTypes, Vcl.Dialogs, uTInject.Diversos;
+  uCEFTypes, Dialogs, uTInject.Diversos;
 
 { TCEFConfig }
 
@@ -361,8 +384,8 @@ begin
     LVReque   := IntToStr(VersaoMinima_CF4_Major)      + '.' + IntToStr(VersaoMinima_CF4_Minor)      + '.' + IntToStr(VersaoMinima_CF4_Release);
     LVerIdent := IntToStr(CEF_SUPPORTED_VERSION_MAJOR) + '.' + IntToStr(CEF_SUPPORTED_VERSION_MINOR) + '.' + IntToStr(CEF_SUPPORTED_VERSION_BUILD);
 
-    Application.MessageBox(PWideChar(Format(MSG_ConfigCEF_ExceptVersaoErrada, [LVReque, LVerIdent])),
-                           PWideChar(Application.Title), MB_ICONERROR + mb_ok
+    Application.MessageBox({$ifdef delphi}PWideChar{$else}PChar{$endif}(Format(MSG_ConfigCEF_ExceptVersaoErrada, [LVReque, LVerIdent])),
+                           {$ifdef delphi}PWideChar{$else}PChar{$endif}(Application.Title), MB_ICONERROR + mb_ok
                           );
     result := False;
     Exit;
@@ -427,7 +450,8 @@ begin
   finally
     Result  := (Self.status = asInitialized);
     if not Result then
-       Application.MessageBox(PWideChar(MSG_ConfigCEF_ExceptConnection), PWideChar(Application.Title), MB_ICONERROR + mb_ok);
+       Application.MessageBox({$ifdef delphi}PWideChar{$else}PChar{$endif}(MSG_ConfigCEF_ExceptConnection),
+                              {$ifdef delphi}PWideChar{$else}PChar{$endif}(Application.Title), MB_ICONERROR + mb_ok);
   end;
 end;
 

@@ -27,16 +27,40 @@ unit uTInject.FrmQRCode;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  System.UiTypes,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.GIFImg,
+  {$IFDEF FPC}
+    Windows,
+    Messages,
+    SysUtils,
+    Variants,
+    Classes,
+    UiTypes,
+    Graphics,
+    Controls,
+    Forms,
+    Dialogs,
+    ExtCtrls,
+    //GIFImg, //Buscar Substituição
+  {$ELSE}
+    Winapi.Windows,
+    Winapi.Messages,
+    System.SysUtils,
+    System.Variants,
+    System.Classes,
+    System.UiTypes,
+    Vcl.Graphics,
+    Vcl.Controls,
+    Vcl.Forms,
+    Vcl.Dialogs,
+    Vcl.ExtCtrls,
+    Vcl.Imaging.GIFImg,
+  {$ENDIF}
   uTInject.Constant;
 
 type
   TFrmQRCode = class(TForm)
     Timg_QrCode: TImage;
     Timg_Animacao: TImage;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClose(Sender: TObject; var {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -63,15 +87,22 @@ var
 
 implementation
 
-uses System.NetEncoding, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage,
+uses
+  {$IFDEF FPC}
+    //
+  {$ELSE}
+    System.NetEncoding,
+    Vcl.Imaging.jpeg,
+    Vcl.Imaging.pngimage,
+  {$ENDIF}
   uTInject.ConfigCEF, uTInject.Console;
 
 {$R *.dfm}
 
-procedure TFrmQRCode.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFrmQRCode.FormClose(Sender: TObject; var {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
 begin
   if not FpodeFechar then
-    action    := caHide;
+  {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF} := caHide;
 
   FTimerGetQrCode.Enabled := False;
 end;
@@ -104,8 +135,8 @@ begin
   Timg_Animacao.Visible := True;
   Timg_QrCode.Visible   := False;
   FpodeFechar           := False;
-  (Timg_Animacao.Picture.Graphic as TGIFImage).AnimationSpeed  := 400;
-  (Timg_Animacao.Picture.Graphic as TGIFImage).Animate         := True;
+ // (Timg_Animacao.Picture.Graphic as TGIFImage).AnimationSpeed  := 400;
+ // (Timg_Animacao.Picture.Graphic as TGIFImage).Animate         := True;
 
 
   FTimerGetQrCode          := TTimer.Create(nil);
@@ -164,7 +195,7 @@ begin
       LImage  := Timg_QrCode;
       Caption := Text_FrmQRCode_CaptionSucess;
     end;
-
+{
     LImage.Top       := Timg_QrCode.Margins.Top;
     LImage.Left      := Timg_QrCode.Margins.Left;
     LImage.AutoSize  := true;
@@ -173,6 +204,7 @@ begin
     LImage.Height    := LImage.Height + Timg_QrCode.Margins.Top;
     LImage.Center    := True;
     AutoSize := True;
+	}
   end;
 end;
 

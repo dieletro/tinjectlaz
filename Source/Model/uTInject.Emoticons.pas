@@ -1,4 +1,4 @@
-﻿{####################################################################################################################
+{####################################################################################################################
                               TINJECT - Componente de comunicação (Não Oficial)
                                            www.tinject.com.br
                                             Novembro de 2019
@@ -36,12 +36,13 @@
 
 unit uTInject.Emoticons;
 
+{$mode delphi}{$H+}
 interface
 
 type
   TInjectEmoticons = record
 
-    const Sorridente       = '😄';
+    const Sorridente       = '😄 ';
     const SorridenteLingua = '😝';
     const Impressionado    = '😱';
     const Irritado         = '😤';
@@ -333,7 +334,7 @@ type
     const Melancia = '🍉';
     const Morango = '🍓';
     const Peach = '🍑';
-    const Melão = '🍈';
+    const Melao = '🍈';
     const Banana = '🍌';
     const Pear = '🍐';
     const Abacaxi = '🍍';
@@ -480,8 +481,8 @@ type
     const PotofFood = '🍲';
     const Oden = '🍢';
     const Dango = '🍡';
-    const Culinária = '🍳';
-    const Pão = '🍞';
+    const Culinaria = '🍳';
+    const Pao = '🍞';
     const Donut = '🍩';
     const Creme = '🍮';
     const SoftIceCream = '🍦';
@@ -826,8 +827,8 @@ type
     const Virgo = '♍';
     const Libra = '♎';
     const Scorpius = '♏';
-    const Sagitário = '♐';
-    const Capricórnio = '♑';
+    const Sagitario = '♐';
+    const Capricornio = '♑';
     const Aquario = '♒';
     const Peixes = '♓';
     const Ophiuchus = '⛎';
@@ -915,7 +916,7 @@ type
     const Boca = '👄';
     const Pedestre = '🚶';
     const Runner = '🏃';
-    const Dançarino = '💃';
+    const Dancarino = '💃';
     const WomanBunnyEars = '👯';
     const OKGesture = '🙆';
     const NoGoodGesture = '🙅';

@@ -34,7 +34,15 @@ unit uTInject.AdjustNumber;
 interface
 
 uses
-  System.Classes, uTInject.Classes, System.MaskUtils, uTInject.Diversos;
+  {$IFDEF FPC}
+    Classes,
+    MaskUtils,
+  {$ELSE}
+    System.Classes,
+    System.MaskUtils,
+  {$ENDIF}
+  uTInject.Classes,
+  uTInject.Diversos;
 
 
 {$M+}{$TYPEINFO ON}
@@ -84,7 +92,7 @@ type
 implementation
 
 uses
-  System.SysUtils, uTInject.Constant;
+  SysUtils, uTInject.Constant;
 
 { TAdjustNumber }
 

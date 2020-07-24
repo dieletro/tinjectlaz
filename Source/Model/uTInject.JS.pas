@@ -34,8 +34,9 @@ unit uTInject.JS;
 interface
 
 uses
-  System.Classes, uTInject.Classes, System.MaskUtils, Data.DB, uCSV.Import,
-  Vcl.ExtCtrls, IdHTTP, uTInject.Diversos;
+  Classes, MaskUtils, DB,
+  ExtCtrls, IdHTTP,
+  uTInject.Classes, uCSV.Import, uTInject.Diversos;
 
 {$M+}{$TYPEINFO ON}
 {$I cef.inc}
@@ -94,9 +95,9 @@ type
 
 implementation
 
-uses uTInject.Constant, System.SysUtils, uTInject.ExePath, Vcl.Forms,
+uses uTInject.Constant, SysUtils, uTInject.ExePath, Forms,
      IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-     Winapi.Windows, uTInject.ConfigCEF, Vcl.Dialogs;
+     Windows, uTInject.ConfigCEF, Dialogs;
 
 
 { TInjectAutoUpdate }
@@ -142,7 +143,11 @@ begin
       //Atualzia o arquivo interno
       GlobalCEFApp.UpdateDateIniFile;
       if UpperCase(GlobalCEFApp.PathJs) <> UpperCase(Ltmp) then
-         FJSScript.SaveToFile(GlobalCEFApp.PathJs, TEncoding.UTF8);
+         FJSScript.{$IFNDEF FPC}
+           SaveToFile(GlobalCEFApp.PathJs, TEncoding.UTF8);
+         {$ELSE}
+           SaveToFile(GlobalCEFApp.PathJs);
+         {$ENDIF}
       if Assigned(FOnUpdateJS) Then
          FOnUpdateJS(Self);
     end else
@@ -167,7 +172,14 @@ end;
 
 procedure TInjectJS.DelFileTemp;
 begin
-  DeleteFile(PwideChar(IncludeTrailingPathDelimiter(GetEnvironmentVariable('Temp'))+'GetTInject.tmp'));
+  {$IFNDEF FPC}
+    DeleteFile(PwideChar(IncludeTrailingPathDelimiter(
+      GetEnvironmentVariable('Temp'))+'GetTInject.tmp'));
+  {$ELSE}
+    DeleteFile(PChar(IncludeTrailingPathDelimiter(
+      PChar(GetEnvironmentVariable('Temp','',0)))+PChar('GetTInject.tmp')));
+  {$ENDIF}
+
 end;
 
 destructor TInjectJS.Destroy;
@@ -244,7 +256,7 @@ begin
       if Assigned(GlobalCEFApp) then
          GlobalCEFApp.SetError;
       if Assigned(FOnErrorInternal) then
-         Application.MessageBox(PWideChar(MSG_ExceptConfigVersaoCompInvalida), PWideChar(Application.Title), MB_ICONERROR + mb_ok);
+         Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(MSG_ExceptConfigVersaoCompInvalida), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
       exit;
     End;
 
@@ -255,7 +267,7 @@ begin
          GlobalCEFApp.SetError;
 
       if Assigned(FOnErrorInternal) then
-         Application.MessageBox(PWideChar(MSG_ConfigCEF_ExceptVersaoErrada), PWideChar(Application.Title), MB_ICONERROR + mb_ok);
+         Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(MSG_ConfigCEF_ExceptVersaoErrada), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
       exit;
     End;
 
@@ -290,12 +302,17 @@ var
   LSalvamento  : String;
   LRet         : TStringList;
 begin
-  LSalvamento   := IncludeTrailingPathDelimiter(GetEnvironmentVariable('Temp'))+'GetTInject.tmp';
+  LSalvamento   := IncludeTrailingPathDelimiter(
+  {$IFNDEF FPC}
+      GetEnvironmentVariable('Temp')+'GetTInject.tmp');
+  {$ELSE}
+      PChar(GetEnvironmentVariable('Temp','',0)+PChar('GetTInject.tmp')));
+  {$ENDIF}
 
   LRet          := TStringList.Create;
   LHttp         := TUrlIndy.Create;
   try
-    DeleteFile(PwideChar(LSalvamento));
+    DeleteFile({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(LSalvamento));
     LHttp.HTTPOptions := LHttp.HTTPOptions + [hoForceEncodeParams] ;
     LHttp.Request.Accept          := 'text/html, */*';
     LHttp.Request.ContentEncoding := 'raw';
@@ -313,7 +330,12 @@ begin
     Begin
       if not FileExists(LSalvamento) then
       Begin
-        LRet.SaveToFile(LSalvamento, TEncoding.UTF8);
+        LRet.
+        {$IFNDEF FPC}
+          SaveToFile(LSalvamento, TEncoding.UTF8);
+        {$ELSE}
+          SaveToFile(LSalvamento);
+        {$ENDIF}
         Result := LSalvamento;
       End;
     End;

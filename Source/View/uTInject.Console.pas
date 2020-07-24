@@ -24,27 +24,42 @@
 ####################################################################################################################
 }
 unit uTInject.Console;
-
+{$ifdef fpc}
+  {$mode delphi}
+{$endif}
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.ExtCtrls, StrUtils,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, ExtCtrls, StrUtils,
 
-  uCEFWinControl, uCEFChromiumCore,   uCEFTypes,
-  uCEFInterfaces, uCEFConstants,      uCEFWindowParent, uCEFChromium,
+  uCEFWinControl,
+  {$ifndef fpc}
+    uCEFChromiumCore,
+  {$endif}
+  uCEFTypes,
+  uCEFInterfaces, uCEFConstants, uCEFWindowParent, uCEFChromium,
 
   //units adicionais obrigatórias
   uTInject.Classes,  uTInject.constant, uTInject.Diversos,
 
 
-  Vcl.StdCtrls, Vcl.ComCtrls, System.ImageList, Vcl.ImgList, System.JSON,
-  Vcl.Buttons, Vcl.Imaging.pngimage, Rest.Json,
-  Vcl.Imaging.jpeg, uCEFSentinel, uTInject.FrmQRCode,
-  Vcl.WinXCtrls;
+  StdCtrls, ComCtrls, ImgList, uCEFSentinel,
+  {$ifdef delphi}
+    System.ImageList,
+    System.JSON,
+    Rest.Json,
+    Imaging.pngimage,
+    Imaging.jpeg,
+    WinXCtrls,
+  {$else}
+    fpjson,
+  {$endif}
+  Buttons,
+  uTInject.FrmQRCode;
 
 type
-  TProcedure = procedure() of object;
+ // TProcedure = procedure() of object;
 
   TFrmConsole = class(TForm)
     Chromium1: TChromium;
@@ -226,8 +241,13 @@ var
 implementation
 
 uses
-  System.NetEncoding, Vcl.Dialogs, uTInject.ConfigCEF, uTInject, uCEFMiscFunctions,
-  Data.DB, uTInject.FrmConfigNetWork;
+  {$ifdef delphi}
+    System.NetEncoding, Data.DB,
+  {$else}
+    db,
+  {$endif}
+  Dialogs, uTInject.ConfigCEF, uTInject, uCEFMiscFunctions,
+  uTInject.FrmConfigNetWork;
 
 {$R *.dfm}
 
@@ -249,6 +269,7 @@ end;
 
 procedure TFrmConsole.Button1Click(Sender: TObject);
 begin
+  {$IFNDEF FPC}
   ExecuteJS('var atual = 0;                                             '+
 'var antigo = 0;                                                        '+
 'var controle = 0;                                                      '+
@@ -277,6 +298,7 @@ begin
 'setTimeout(function() {                  '+
 '    init();                              '+
 '}, 5000);', false);
+  {$ENDIF}
 end;
 
 procedure TFrmConsole.Button2Click(Sender: TObject);
@@ -308,6 +330,13 @@ end;
 procedure TFrmConsole.ExecuteJS(PScript: WideString;  PDirect:  Boolean; Purl:String; pStartline: integer);
 var
   lThread : TThread;
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+       FrmConsole.Chromium1.Browser.MainFrame.ExecuteJavaScript(PScript, Purl, pStartline);
+  end;
+
 begin
   if Assigned(GlobalCEFApp) then
   Begin
@@ -326,15 +355,26 @@ begin
        Exit;
      end;
 
-     lThread := TThread.CreateAnonymousThread(procedure
-        begin
-          TThread.Synchronize(nil, procedure
-          begin
-            if Assigned(FrmConsole) then
-               FrmConsole.Chromium1.Browser.MainFrame.ExecuteJavaScript(PScript, Purl, pStartline)
-          end);
-        end);
-     lThread.Start;
+     {$IFNDEF FPC}
+     lThread := TThread.CreateAnonymousThread(
+       procedure
+         begin
+           TThread.Synchronize(nil, procedure
+           begin
+             if Assigned(FrmConsole) then
+                FrmConsole.Chromium1.Browser.MainFrame.ExecuteJavaScript(PScript, Purl, pStartline)
+           end);
+         end);
+       lThread.Start;
+     {$ELSE}
+       with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+         begin
+           FreeOnTerminate := True;
+           Start;
+         end;
+     {$ENDIF}
+
+
   end;
 end;
 

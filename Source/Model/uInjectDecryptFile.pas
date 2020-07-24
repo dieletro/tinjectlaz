@@ -2,8 +2,21 @@ unit uInjectDecryptFile;
 
 interface
 
-uses System.Classes, Vcl.ExtCtrls, System.Generics.Collections,
-  shellapi, Winapi.UrlMon, IdHTTP, Winapi.Windows;
+uses
+  {$IFDEF FPC}
+    Classes,
+    Generics.Collections,
+    UrlMon,
+    Windows,
+    ExtCtrls,
+  {$ELSE}
+    System.Classes,
+    System.Generics.Collections,
+    Winapi.UrlMon,
+    Winapi.Windows,
+    Vcl.ExtCtrls,
+  {$ENDIF}
+  shellapi, IdHTTP;
 
 type
   TInjectDecryptFile = class(TComponent)
@@ -21,7 +34,15 @@ type
 implementation
 
 uses
-  System.StrUtils, System.SysUtils, Vcl.Forms;
+  {$IFDEF FPC}
+    StrUtils,
+    SysUtils,
+    Forms
+  {$ELSE}
+    System.StrUtils,
+    System.SysUtils,
+    Vcl.Forms
+  {$ENDIF};
 
 { TImagem }
 

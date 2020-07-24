@@ -35,16 +35,49 @@
 
 unit uTInject.Classes;
 
+{$MODE DELPHI}{*$mode objfpc} {$H+}
+{$MACRO ON}
+{$COPERATORS ON}
+{$DEFINE CUSTOM_DICTIONARY_CONSTRAINTS := TKey, TValue, THashFactory}
+{$DEFINE OPEN_ADDRESSING_CONSTRAINTS := TKey, TValue, THashFactory, TProbeSequence}
+{$DEFINE CUCKOO_CONSTRAINTS := TKey, TValue, THashFactory, TCuckooCfg}
+{$DEFINE TREE_CONSTRAINTS := TKey, TValue, TInfo}
+{$WARNINGS OFF}
+{$HINTS OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+
 interface
 
-{$I TInjectDiretiva.inc}
+{$I ..\TInjectDiretiva.inc}
 
-uses Generics.Collections, Rest.Json, uTInject.FrmQRCode, Vcl.Graphics, System.IOUtils,
-  System.Classes, uTInject.Constant, IdHTTP, Vcl.ExtCtrls,
- {$IFDEF DELPHI25_UP}
-    Vcl.IdAntiFreeze,
+uses
+  {$IFDEF FPC}
+    RtlConsts,
+    SysUtils, Generics.Collections, Generics.MemoryExpanders,
+    Generics.Defaults, Generics.Helpers, Generics.Strings,
+    fpjson, jsonscanner,jsonparser,
+    Graphics,
+    ExtCtrls,
+    //lazJPEG,
+    //IOUTils  // Para Uso do TFile, necessário
+    Classes,
+    base64,  //usado para o encode e decode de base64
+  {$ELSE}
+    Generics.Collections,
+    Rest.Json,
+    Vcl.Graphics,
+    Vcl.ExtCtrls,
+    Vcl.Imaging.jpeg,
+    System.Classes,
+    System.IOUtils,
+
+    {$IFDEF DELPHI25_UP}
+       Vcl.IdAntiFreeze,
+     {$ENDIF}
   {$ENDIF}
-  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, Vcl.Imaging.jpeg;
+   uTInject.FrmQRCode, uTInject.Constant, IdHTTP,
+   IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient;
 
 type
 
@@ -128,7 +161,7 @@ type
     Procedure  ClearArray(PArray : TArray<T>);
     property   result: TArray<T> read FResult write FResult;
     destructor Destroy; override;
-  end;
+  end{$ifdef EXTRA_WARNINGS}experimental{$endif};
 
 
   {########################################################################################################################################}
@@ -785,8 +818,22 @@ implementation
 
 
 uses
-  System.JSON, System.SysUtils, Vcl.Dialogs, System.NetEncoding,
-  Vcl.Imaging.pngimage, uTInject.ConfigCEF, Vcl.Forms, Winapi.Windows,
+  {$IFDEF FPC}
+    Dialogs,
+    //System.NetEncoding,
+    //Vcl.Imaging.pngimage,
+    Forms,
+    Windows,
+  {$ELSE}
+    System.JSON,
+    System.SysUtils,
+    Vcl.Dialogs,
+    System.NetEncoding,
+    Vcl.Imaging.pngimage,
+    Vcl.Forms,
+    Winapi.Windows,
+  {$ENDIF}
+  uTInject.ConfigCEF,
   uTInject.Diversos;
 
 var
@@ -817,8 +864,13 @@ Begin
             LTmp:= '[' + FormatDateTime('dd/mm/yy hh:nn:ss', now) + ' - ' + PCab + ']  ' + slinebreak;
 
       if PCab= 'CONSOLE'  then
+      {$IFNDEF FPC}
         TFile.AppendAllText(LName, slinebreak, TEncoding.ASCII);
       TFile.AppendAllText(LName, slinebreak + LTmp + Pvalor, TEncoding.ASCII);
+      {$ELSE}
+        //Precisamos Add uma solução aqui
+      {$ENDIF}
+
     End;
   Except
 
@@ -844,9 +896,13 @@ begin
 end;
 
 function TResultQRCodeClass.CreateImage: Boolean;
-{$IFNDEF VER330}
 var
+{$IFNDEF FPC}
+  {$IFNDEF VER330}
     PNG: TpngImage;
+  {$ENDIF}
+{$ELSE}
+   PNG: TPortableNetworkGraphic;
 {$ENDIF}
 begin
   Result := False;
@@ -857,18 +913,27 @@ begin
     FreeAndNil(FAQrCodeImage);
     FAQrCodeImage  := TPicture.Create;       
     FAQrCodeImageStream.Position := 0;
-    
-    {$IFDEF VER330}
-      FAQrCodeImage.LoadFromStream(FAQrCodeImageStream);
-   {$ELSE}
-      PNG := TPngImage.Create;
-      try
-        Png.LoadFromStream(FAQrCodeImageStream);
-        FAQrCodeImage.Graphic := PNG;
-      finally
-        PNG.Free;
-      end;
-   {$ENDIF}
+    {$IFNDEF FPC}
+      {$IFDEF VER330}
+        FAQrCodeImage.LoadFromStream(FAQrCodeImageStream);
+      {$ELSE}
+        PNG := TPngImage.Create;
+        try
+          Png.LoadFromStream(FAQrCodeImageStream);
+          FAQrCodeImage.Graphic := PNG;
+        finally
+          PNG.Free;
+        end;
+      {$ENDIF}
+     {$ELSE}
+        PNG := TPortableNetworkGraphic.Create;
+        try
+          PNG.LoadFromStream(FAQrCodeImageStream);
+          FAQrCodeImage.Graphic := PNG;
+        finally
+          PNG.Free;
+        end;
+     {$ENDIF}
     result := True;
   Except
   end;
@@ -906,7 +971,17 @@ begin
       if LMem.Size > 3000 Then //Tamanho minimo de uma imagem
       Begin
         LMem.Position := 0;
-        TNetEncoding.Base64.Decode(LMem, FAQrCodeImageStream );
+        {$IFNDEF FPC}
+          TNetEncoding.Base64.Decode(LMem, FAQrCodeImageStream );
+        {$ELSE}
+          with TBase64DecodingStream.Create(FAQrCodeImageStream, bdmMIME) do
+          try
+            CopyFrom(LMem, LMem.Size);
+          finally
+            Free;
+          end;
+        {$ENDIF}
+
         FAQrCodeImageStream.Position := 0;
 
         FAQrCodeSucess := True;
@@ -928,9 +1003,15 @@ end;
 { TResponseConsoleMessage }
 constructor TResponseConsoleMessage.Create(pAJsonString: string);
 var
-  lAJsonObj: TJSONValue;
+  {$IFNDEF FPC}lAJsonObj: TJSONValue; {$ELSE}lAJsonObj: TJSONParser; {$ENDIF}
+
 begin
-  lAJsonObj := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(pAJsonString),0); { TODO : mudei de ASCII para UTF8 aqui }
+  {$IFNDEF FPC}
+    lAJsonObj := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(pAJsonString),0); { TODO : mudei de ASCII para UTF8 aqui }
+  {$ELSE}
+    lAJsonObj := TJSONParser.Create(pAJsonString,[joUTF8,joStrict,joComments,joIgnoreTrailingComma]); { TODO : mudei de ASCII para UTF8 aqui }
+  {$ENDIF}
+
   try
     if not Assigned(lAJsonObj) then
        Exit;
@@ -1071,16 +1152,32 @@ end;
 { TClassPadrao }
 constructor TClassPadrao.Create(pAJsonString: string; PJsonOption: TJsonOptions);
 var
-  lAJsonObj: TJSONValue;
+  {$IFNDEF FPC}
+    lAJsonObj: TJSONValue;
+  {$ELSE}
+    lAJsonData: TJSONData;
+    lAJsonObj : TJSONObject;
+  {$ENDIF}
 begin
-  lAJsonObj      := TJSONObject.ParseJSONValue(pAJsonString);
+  {$IFNDEF FPC}
+    lAJsonObj := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(pAJsonString),0); { TODO : mudei de ASCII para UTF8 aqui }
+  {$ELSE}
+    lAJsonData := GetJSON(pAJsonString); //TJSONParser.Create(pAJsonString, PJsonOption);
+  {$ENDIF}
+
   FInjectWorking := False;
   try
    try
-    if NOT Assigned(lAJsonObj) then
-       Exit;
-
-    TJson.JsonToObject(Self, TJSONObject(lAJsonObj) ,PJsonOption);
+    {$IFNDEF FPC}
+      if NOT Assigned(lAJsonObj) then
+         Exit;
+      TJson.JsonToObject(Self, TJSONObject(lAJsonObj) ,PJsonOption);
+    {$ELSE}
+      if NOT Assigned(lAJsonData) then
+         Exit;
+      lAJsonObj := TJSONObject(lAJsonData);
+      TJSONParser.Create(pAJsonString ,PJsonOption);
+    {$ENDIF}
     FJsonString := pAJsonString;
           SleepNoFreeze(10);
 
@@ -1094,6 +1191,7 @@ begin
    end;
   finally
     FreeAndNil(lAJsonObj);
+    {$IFDEF FPC}FreeAndNil(lAJsonData);{$ENDIF}
   end;
 end;
 
@@ -1104,7 +1202,12 @@ end;
 
 function TClassPadrao.ToJsonString: string;
 begin
-  result := TJson.ObjectToJsonString(self);
+  result :=
+  {$IFNDEF FPC}
+    TJson.ObjectToJsonString(self);
+  {$ELSE}
+    TJSONData(Self).FormatJSON;
+  {$ENDIF}
 end;
 
 { TClassPadraoList<T> }
@@ -1113,16 +1216,18 @@ var
   I: Integer;
 begin
    try
-   {$IFDEF VER340}
-      PArray := nil;
+   {$IFDEF CompilerVersion >= 27}
+     PArray := nil;
    {$ENDIF}
 
-    for i:= Length(PArray)-1 downto 0 do
-        {$IFDEF VER300}
-          freeAndNil(PArray[i]);
+    for I:= Length(PArray)-1 downto 0 do
+        {$IFDEF DELPHI}
+          {$IFDEF CompilerVersion >= 25}
+            freeAndNil(PArray[i]);
+          {$ENDIF}
         {$ENDIF}
 
-        {$IFDEF VER330}
+        {$IFDEF FPC}
           freeAndNil(PArray[i]);
         {$ENDIF}
    finally
@@ -1217,8 +1322,8 @@ begin
         if FShowException then
         Begin
           if pos(AnsiUpperCase('Cold not load SSL'), AnsiUpperCase(e.Message)) > 0 then
-             Application.MessageBox(PWideChar(MSG_Exceptlibeay32dll), PWideChar(Application.Title), MB_ICONERROR + mb_ok) else
-             Application.MessageBox(Pwidechar('Erro HTTP GET (js.abr) ' + e.Message), PWideChar(Application.Title), MB_ICONWARNING + mb_ok);
+             Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(MSG_Exceptlibeay32dll), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok) else
+             Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}('Erro HTTP GET (js.abr) ' + e.Message), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONWARNING + mb_ok);
         End;
       End;
     end;
@@ -1314,17 +1419,32 @@ end;
 constructor TClassAllGroupContacts.Create(pAJsonString: string;
   PJsonOption: TJsonOptions);
 var
-  lAJsonObj: TJSONValue;
+  {$IFNDEF FPC}
+    lAJsonObj: TJSONValue;
+  {$ELSE}
+    lAJsonData: TJSONData;
+    lAJsonObj : TJSONObject;
+  {$ENDIF}
 begin
-  lAJsonObj      := TJSONObject.ParseJSONValue(pAJsonString);
+  {$IFNDEF FPC}
+    lAJsonObj      := TJSONObject.ParseJSONValue(pAJsonString);
+  {$ELSE}
+    lAJsonData := GetJSON(pAJsonString); //TJSONParser.Create(pAJsonString, PJsonOption);
+  {$ENDIF}
 
   try
    try
-    if NOT Assigned(lAJsonObj) then
-       Exit;
+    {$IFNDEF FPC}
+      if NOT Assigned(lAJsonObj) then
+         Exit;
 
-    TJson.JsonToObject(Self, TJSONObject(lAJsonObj) ,PJsonOption);
-
+      TJson.JsonToObject(Self, TJSONObject(lAJsonObj) ,PJsonOption);
+    {$ELSE}
+      if NOT Assigned(lAJsonData) then
+         Exit;
+      lAJsonObj := TJSONObject(lAJsonData);
+      TJSONParser.Create(pAJsonString ,PJsonOption);
+    {$ENDIF}
           SleepNoFreeze(10);
 
     If LowerCase(SELF.ClassName) <> LowerCase('TResponseConsoleMessage') Then
@@ -1337,6 +1457,7 @@ begin
    end;
   finally
     FreeAndNil(lAJsonObj);
+    {$IFDEF FPC}FreeAndNil(lAJsonData);{$ENDIF}
   end;
 
 end;
@@ -1344,12 +1465,16 @@ end;
 class function TClassAllGroupContacts.FromJsonString(
   AJsonString: string): TClassAllGroupContacts;
 begin
-  result := TJson.JsonToObject<TClassAllGroupContacts>(AJsonString)
+  {$IFNDEF FPC}
+    result := TJson.JsonToObject<TClassAllGroupContacts>(AJsonString);
+  {$ENDIF}
 end;
 
 function TClassAllGroupContacts.ToJsonString: string;
 begin
-  result := TJson.ObjectToJsonString(self);
+  {$IFNDEF FPC}
+    result := TJson.ObjectToJsonString(self);
+  {$ENDIF}
 end;
 
 { TRetornoAllGroupAdmins }
