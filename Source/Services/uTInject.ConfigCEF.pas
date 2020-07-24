@@ -91,7 +91,7 @@ type
     FPathJS              : String;
     FStartTimeOut        : Cardinal;
     FErrorInt            : Boolean;
-    FPathJsUpdate        : TdateTime;
+    FPathJsUpdate        : TDateTime;
     FLogConsole          : String;
     FHandleFrm           : HWND;
     FInDesigner          : Boolean;

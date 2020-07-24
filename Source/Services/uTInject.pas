@@ -327,13 +327,23 @@ end;
 function TInject.CheckDelivered: String;
 var
   lThread : TThread;
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.CheckDelivered;
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
   if not Assigned(FrmConsole) then
      Exit;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
           if Config.AutoDelay > 0 then
              sleep(random(Config.AutoDelay));
@@ -345,8 +355,17 @@ begin
           end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+           sleep(random(Config.AutoDelay));
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.CheckIsConnected;
@@ -358,6 +377,15 @@ end;
 procedure TInject.CheckIsValidNumber(PNumberPhone: string);
 var
   lThread : TThread;
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.CheckIsValidNumber(PNumberPhone);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -370,8 +398,9 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumberPhone);
     Exit;
   end;
-              {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -381,8 +410,15 @@ begin
           end;
         end);
 
-      end);  }
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
 
 //    if Assigned(FrmConsole) then
 //     FrmConsole.CheckIsValidNumber(PNumberPhone);
@@ -391,6 +427,15 @@ end;
 procedure TInject.NewCheckIsValidNumber(PNumberPhone: string);
 var
   lThread : TThread;
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.NewCheckIsValidNumber(PNumberPhone);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -403,8 +448,9 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumberPhone);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -415,8 +461,14 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
 
 //    if Assigned(FrmConsole) then
 //     FrmConsole.CheckIsValidNumber(PNumberPhone);
@@ -491,6 +543,15 @@ end;
 procedure TInject.createGroup(PGroupName, PParticipantNumber: string);
 var
   lThread : TThread;
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.CreateGroup(PGroupName, PParticipantNumber);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -509,8 +570,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PParticipantNumber);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
            sleep(random(Config.AutoDelay));
@@ -524,8 +586,17 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+           sleep(random(Config.AutoDelay));
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 destructor TInject.Destroy;
@@ -577,15 +648,27 @@ begin
 end;
 
 function TInject.GetUnReadMessages: String;
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GetUnReadMessages;
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
   if not Assigned(FrmConsole) then
      Exit;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
           if Config.AutoDelay > 0 then
              sleep(random(Config.AutoDelay));
@@ -597,13 +680,33 @@ begin
           end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+           sleep(random(Config.AutoDelay));
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.GroupAddParticipant(PIDGroup, PNumber: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GroupAddParticipant(PIDGroup, PNumber);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -618,7 +721,8 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-  {
+
+  {$IFNDEF FPC}
   lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
@@ -630,13 +734,31 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.groupDelete(PIDGroup: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GroupDelete(PIDGroup);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -649,8 +771,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -661,13 +784,31 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.GroupDemoteParticipant(PIDGroup, PNumber: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GroupDemoteParticipant(PIDGroup, PNumber);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -682,8 +823,9 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -694,13 +836,31 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.GroupJoinViaLink(PLinkGroup: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GroupJoinViaLink(PLinkGroup);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -713,8 +873,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PLinkGroup);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -725,13 +886,31 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.groupLeave(PIDGroup: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GroupLeave(PIDGroup);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -744,8 +923,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -756,13 +936,31 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.GroupPromoteParticipant(PIDGroup, PNumber: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GroupRemoveParticipant(PIDGroup, PNumber);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -777,8 +975,9 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -789,13 +988,31 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.GroupRemoveParticipant(PIDGroup, PNumber: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.GroupRemoveParticipant(PIDGroup, PNumber);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -810,8 +1027,9 @@ begin
     Int_OnErroInterno(Self, MSG_ExceptPhoneNumberError, PNumber);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -822,8 +1040,15 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.SetProfileName(vName: String);
@@ -898,8 +1123,19 @@ begin
 end;
 
 procedure TInject.GroupRemoveInviteLink(PIDGroup: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.revokeGroupInviteLink(PIDGroup);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -911,9 +1147,10 @@ begin
   begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
-  end;       {
+  end;
 
-  lThread := TThread.CreateAnonymousThread(procedure
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -923,8 +1160,16 @@ begin
           end;
         end);
 
-      end); }
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.CleanALLChat(PNumber : String);
@@ -977,8 +1222,20 @@ begin
 end;
 
 procedure TInject.listGroupContacts(PIDGroup: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.listGroupContacts(PIDGroup);
+      FrmConsole.listGroupAdmins(PIDGroup);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -991,8 +1248,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PIDGroup);
     Exit;
   end;
-            {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -1003,8 +1261,15 @@ begin
           end;
         end);
 
-      end);}
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
 
 end;
 
@@ -1019,15 +1284,27 @@ begin
 end;
 
 procedure TInject.Logtout;
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.Logout();
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
   if not Assigned(FrmConsole) then
      Exit;
-             {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         TThread.Synchronize(nil, procedure
         begin
@@ -1037,8 +1314,16 @@ begin
           end;
         end);
 
-      end); }
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.Int_OnNotificationCenter(PTypeHeader: TTypeHeader; PValue: String; Const PReturnClass : TObject);
@@ -1299,8 +1584,24 @@ begin
 end;
 
 procedure TInject.send(PNumberPhone, PMessage: string; PEtapa: string = '');
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.ReadMessages(PNumberPhone); //Marca como lida a mensagem
+      FrmConsole.Send(PNumberPhone, PMessage);
+      if PEtapa <> '' then
+      begin
+        FrmConsole.ReadMessagesAndDelete(PNumberPhone);//Deleta a conversa
+      end;
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -1319,8 +1620,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PNumberPhone);
     Exit;
   end;
-  {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
            sleep(random(Config.AutoDelay));
@@ -1339,15 +1641,27 @@ begin
         end);
 
       end);
-  }
-  lThread.Start;
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+          sleep(random(Config.AutoDelay));
+
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 
 procedure TInject.SendFile(PNumberPhone: string;
   const PFileName: String; PMessage: string);
 var
-  lThread     : TThread;
+  {$IFNDEF FPC}
+    lThread : TThread;
+  {$ENDIF}
   {$ifdef delphi}
     LStream     : TMemoryStream;
     LBase64File : TBase64Encoding;
@@ -1357,6 +1671,16 @@ var
   {$endif}
   LExtension  : String;
   LBase64     : String;
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.ReadMessages(PNumberPhone); //Marca como lida a mensagem
+      FrmConsole.sendBase64(LBase64, PNumberPhone, PFileName, PMessage);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -1419,8 +1743,9 @@ begin
       FreeAndNil(VStream);
     {$endif}
   end;
-           {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+   lThread := TThread.CreateAnonymousThread(procedure
       begin
          if Config.AutoDelay > 0 then
             sleep(random(Config.AutoDelay));
@@ -1433,13 +1758,36 @@ begin
             FrmConsole.sendBase64(LBase64, PNumberPhone, PFileName, PMessage);
           end;
         end);
-      end);  }
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+          sleep(random(Config.AutoDelay));
+
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 procedure TInject.SendLinkPreview(PNumberPhone, PVideoLink, PMessage: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.ReadMessages(PNumberPhone); //Marca como lida a mensagem
+      FrmConsole.sendLinkPreview(PNumberPhone, PVideoLink, PMessage);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -1464,8 +1812,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PVideoLink);
     Exit;
   end;
-       {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+   lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
            sleep(random(Config.AutoDelay));
@@ -1479,14 +1828,37 @@ begin
           end;
         end);
 
-      end); }
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+          sleep(random(Config.AutoDelay));
+
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 
 end;
 
 procedure TInject.SendLocation(PNumberPhone, PLat, PLng, PMessage: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.ReadMessages(PNumberPhone); //Marca como lida a mensagem
+      FrmConsole.sendLocation(PNumberPhone, PLat, PLng, PMessage);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -1511,8 +1883,9 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PLat+PLng);
     Exit;
   end;
-        {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
       begin
         if Config.AutoDelay > 0 then
            sleep(random(Config.AutoDelay));
@@ -1526,14 +1899,36 @@ begin
           end;
         end);
 
-      end);  }
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+          sleep(random(Config.AutoDelay));
+
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
 
 end;
 
 procedure TInject.sendBase64(Const vBase64: String; vNum: String;  Const vFileName, vMess: string);
-Var
+{$IFNDEF FPC}
+var
   lThread : TThread;
+{$ENDIF}
+
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.ReadMessages(vNum); //Marca como lida a mensagem
+      FrmConsole.sendBase64(vBase64, vNum, vFileName, vMess);
+    end;
+  end;
+
 begin
   inherited;
   If Application.Terminated Then
@@ -1553,7 +1948,8 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, vNum);
     Exit;
   end;
-        {
+
+  {$IFNDEF FPC}
   lThread := TThread.CreateAnonymousThread(procedure
       begin
          if Config.AutoDelay > 0 then
@@ -1567,14 +1963,35 @@ begin
             FrmConsole.sendBase64(vBase64, vNum, vFileName, vMess);
           end;
         end);
-      end); }
-  lThread.Start;
+      end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
+      begin
+        if Config.AutoDelay > 0 then
+          sleep(random(Config.AutoDelay));
+
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
+
 end;
 
 
 procedure TInject.SendContact(PNumberPhone, PNumber: string);
+{$IFNDEF FPC}
 var
   lThread : TThread;
+{$ENDIF}
+  procedure ExecJS;
+  Begin
+    if Assigned(FrmConsole) then
+    begin
+      FrmConsole.SendContact(PNumberPhone, PNumber);
+    end;
+  end;
+
 begin
   If Application.Terminated Then
      Exit;
@@ -1593,22 +2010,34 @@ begin
     Int_OnErroInterno(Self, MSG_WarningNothingtoSend, PNumberPhone);
     Exit;
   end;
-      {
-  lThread := TThread.CreateAnonymousThread(procedure
+
+  {$IFNDEF FPC}
+    lThread := TThread.CreateAnonymousThread(procedure
+    begin
+      if Config.AutoDelay > 0 then
+         sleep(random(Config.AutoDelay));
+
+      TThread.Synchronize(nil, procedure
+      begin
+        if Assigned(FrmConsole) then
+        begin
+          FrmConsole.SendContact(PNumberPhone, PNumber);
+        end;
+      end);
+
+    end);
+    lThread.Start;
+  {$ELSE}
+    with TThread.CreateAnonymousThread(TProcedure(@ExecJS)) do
       begin
         if Config.AutoDelay > 0 then
-           sleep(random(Config.AutoDelay));
+          sleep(random(Config.AutoDelay));
 
-        TThread.Synchronize(nil, procedure
-        begin
-          if Assigned(FrmConsole) then
-          begin
-            FrmConsole.SendContact(PNumberPhone, PNumber);
-          end;
-        end);
+        FreeOnTerminate := True;
+        Start;
+      end;
+  {$ENDIF}
 
-      end); }
-  lThread.Start;
 end;
 
 procedure TInject.SetAuth(const Value: boolean);
