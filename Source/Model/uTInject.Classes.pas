@@ -54,8 +54,9 @@ interface
 uses
   {$IFDEF FPC}
     RtlConsts,
-    SysUtils, Generics.Collections, Generics.MemoryExpanders,
-    Generics.Defaults, Generics.Helpers, Generics.Strings,
+    SysUtils,
+    //Generics.Collections, Generics.MemoryExpanders,
+    //Generics.Defaults, Generics.Helpers, Generics.Strings,
     fpjson, jsonscanner,jsonparser,
     Graphics,
     ExtCtrls,

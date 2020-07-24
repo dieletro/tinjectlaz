@@ -71,7 +71,7 @@ var
       Base64 : TBase64DecodingStream;
       VSrcStream: TStringStream;
     {$ENDIF}
-    bytes : tBytes;
+     bytes : tBytes;
 begin
   {$IFDEF FPC}
     VSrcStream := TStringStream.Create(imagem);

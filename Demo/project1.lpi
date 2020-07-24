@@ -59,6 +59,11 @@
       <OtherUnitFiles Value="."/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="DelphiUnicode"/>
+      </SyntaxOptions>
+    </Parsing>
     <Linking>
       <Options>
         <Win32>
@@ -66,11 +71,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <ExecuteBefore>
-        <ScanForFPCMsgs Value="True"/>
-      </ExecuteBefore>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

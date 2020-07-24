@@ -4,14 +4,14 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="27">
+    <Units Count="47">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="22"/>
-        <CursorPos X="56" Y="30"/>
-        <UsageCount Value="25"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="2"/>
+        <CursorPos X="16" Y="9"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,25 +20,25 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="302"/>
-        <CursorPos X="42" Y="312"/>
-        <UsageCount Value="25"/>
+        <TopLine Value="1409"/>
+        <CursorPos Y="1419"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="u_principal.dfm"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="19"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Source\Model\uCSV.Import.pas"/>
         <UnitName Value="UCSV.Import"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="99"/>
+        <TopLine Value="203"/>
         <CursorPos X="35" Y="97"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\Source\View\uTInject.Console.pas"/>
@@ -46,284 +46,440 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="364"/>
-        <CursorPos X="35" Y="375"/>
-        <UsageCount Value="11"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="1065"/>
+        <CursorPos Y="1076"/>
+        <UsageCount Value="15"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\Source\View\uTInject.FrmConfigNetWork.pas"/>
-        <EditorIndex Value="-1"/>
+        <ComponentName Value="FrmConfigNetWork"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="37"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\Source\View\uTInject.FrmQRCode.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="52"/>
-        <CursorPos X="88" Y="63"/>
-        <UsageCount Value="10"/>
+        <ComponentName Value="FrmQRCode"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="165"/>
+        <CursorPos X="27" Y="173"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\Source\Model\uTInject.Classes.pas"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="69"/>
-        <CursorPos X="50" Y="83"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="47"/>
+        <CursorPos X="37" Y="64"/>
+        <UsageCount Value="16"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-json\src\jsonparser.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="17"/>
         <CursorPos X="3" Y="28"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit8>
       <Unit9>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-json\src\fpjson.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="113"/>
         <CursorPos X="19" Y="125"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\Source\Model\uInjectDecryptFile.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="115"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="2" Y="8"/>
+        <UsageCount Value="11"/>
       </Unit10>
       <Unit11>
         <Filename Value="..\Source\Model\UBase64.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="78"/>
         <CursorPos X="14" Y="86"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
       </Unit11>
       <Unit12>
         <Filename Value="..\Source\Model\uTInject.Diversos.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="265"/>
-        <UsageCount Value="10"/>
+        <TopLine Value="24"/>
+        <CursorPos X="33" Y="70"/>
+        <UsageCount Value="11"/>
       </Unit12>
       <Unit13>
         <Filename Value="..\Source\Model\uTInject.Emoticons.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="28"/>
-        <UsageCount Value="10"/>
+        <TopLine Value="24"/>
+        <UsageCount Value="11"/>
       </Unit13>
       <Unit14>
         <Filename Value="..\Source\Model\uTInject.ExePath.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="163"/>
+        <TopLine Value="6"/>
         <CursorPos X="23" Y="159"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
       </Unit14>
       <Unit15>
         <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="122"/>
-        <CursorPos X="19" Y="128"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="94"/>
+        <CursorPos X="51" Y="103"/>
+        <UsageCount Value="16"/>
       </Unit15>
       <Unit16>
         <Filename Value="..\Source\Services\uTInject.ConfigCEF.pas"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="374"/>
-        <CursorPos X="97" Y="386"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="27"/>
+        <CursorPos Y="30"/>
+        <UsageCount Value="16"/>
       </Unit16>
       <Unit17>
         <Filename Value="..\Source\Services\uTInject.languages.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="356"/>
-        <UsageCount Value="10"/>
+        <TopLine Value="43"/>
+        <CursorPos X="22" Y="54"/>
+        <UsageCount Value="11"/>
       </Unit17>
       <Unit18>
         <Filename Value="..\Source\Services\uTInject.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="513"/>
-        <CursorPos X="26" Y="522"/>
-        <UsageCount Value="10"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="2322"/>
+        <CursorPos Y="2333"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
       </Unit18>
       <Unit19>
         <Filename Value="..\..\..\Requisitos\dcpcrypt2-2010\DCPcrypt2.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="253"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit19>
       <Unit20>
         <Filename Value="..\..\..\Requisitos\dcpcrypt2-2010\DCPreg.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="32"/>
         <CursorPos X="27" Y="42"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit20>
       <Unit21>
         <Filename Value="..\..\..\Requisitos\dcpcrypt2-2010\Ciphers\DCPserpent.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="207"/>
         <CursorPos X="10" Y="218"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit21>
       <Unit22>
         <Filename Value="..\..\..\Requisitos\dcpcrypt2-2010\Ciphers\DCPdes.pas"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit22>
       <Unit23>
         <Filename Value="..\..\..\Requisitos\dcpcrypt2\DCPreg.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="11"/>
         <CursorPos X="46" Y="31"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit23>
       <Unit24>
         <Filename Value="..\..\..\Requisitos\CEF4Delphi-master-CEF84.3.3\CEF4Delphi-master\source\uCEFOAuth2Helper.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="147"/>
         <CursorPos X="15" Y="158"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit24>
       <Unit25>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\inc\objpash.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="183"/>
         <CursorPos X="23" Y="194"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit25>
       <Unit26>
         <Filename Value="..\Source\Model\uTInject.Constant.pas"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="74"/>
-        <CursorPos X="20" Y="78"/>
-        <UsageCount Value="11"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="37"/>
+        <CursorPos X="3" Y="48"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
       </Unit26>
+      <Unit27>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_reg_dockedformeditor.pas"/>
+        <UnitName Value="sparta_reg_DockedFormEditor"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <CursorPos X="8" Y="24"/>
+        <UsageCount Value="10"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_resizer.pas"/>
+        <UnitName Value="sparta_Resizer"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <CursorPos X="18" Y="25"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_designedform.pas"/>
+        <UnitName Value="sparta_DesignedForm"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="44" Y="20"/>
+        <UsageCount Value="10"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_resizerframe.pas"/>
+        <HasResources Value="True"/>
+        <UnitName Value="sparta_ResizerFrame"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <UsageCount Value="10"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\spartaapi.pas"/>
+        <UnitName Value="SpartaAPI"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="85"/>
+        <UsageCount Value="10"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_fakecustom.pas"/>
+        <UnitName Value="sparta_FakeCustom"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="169"/>
+        <CursorPos X="19" Y="174"/>
+        <UsageCount Value="10"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_fakeform.pas"/>
+        <UnitName Value="sparta_FakeForm"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="88"/>
+        <CursorPos X="13" Y="24"/>
+        <UsageCount Value="10"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_fakeframe.pas"/>
+        <UnitName Value="sparta_FakeFrame"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <UsageCount Value="10"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_fakenoncontrol.pas"/>
+        <UnitName Value="sparta_FakeNonControl"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10"/>
+        <UsageCount Value="10"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_mainide.pas"/>
+        <UnitName Value="sparta_MainIDE"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="226"/>
+        <CursorPos X="59" Y="34"/>
+        <UsageCount Value="10"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\source\sparta_hashutils.pas"/>
+        <UnitName Value="sparta_HashUtils"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="C:\lazarus2010\components\sparta\dockedformeditor\sparta_strconsts.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="C:\lazarus\components\sparta\mdi\source\sparta_multiplyresizer.pas"/>
+        <UnitName Value="sparta_MultiplyResizer"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="27" Y="15"/>
+        <UsageCount Value="10"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="C:\lazarus\ide\lazarus.pp"/>
+        <UnitName Value="Lazarus"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="52"/>
+        <CursorPos X="25" Y="61"/>
+        <UsageCount Value="10"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="..\Source\Model\uTInject.AdjustNumber.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="83"/>
+        <UsageCount Value="11"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="..\Source\Model\uTInject.Config.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="72"/>
+        <UsageCount Value="11"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="C:\lazarus208\lcl\extctrls.pp"/>
+        <UnitName Value="ExtCtrls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="185"/>
+        <CursorPos X="14" Y="196"/>
+        <UsageCount Value="10"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="C:\lazarus208\lcl\customtimer.pas"/>
+        <UnitName Value="CustomTimer"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="41"/>
+        <CursorPos X="14" Y="51"/>
+        <UsageCount Value="10"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="..\..\..\Requisitos\CEF_files\CEF4Delphi-master\CEF4Delphi-master\source\uCEFInterfaces.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="580"/>
+        <CursorPos X="15" Y="591"/>
+        <UsageCount Value="10"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="C:\lazarus208\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="644"/>
+        <CursorPos X="15" Y="653"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit46>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="175" TopLine="163"/>
+        <Filename Value="..\Source\Services\uTInject.pas"/>
+        <Caret Line="221" Column="24" TopLine="212"/>
       </Position1>
       <Position2>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="141" TopLine="132"/>
+        <Filename Value="..\Source\Services\uTInject.pas"/>
+        <Caret Line="2298" TopLine="2291"/>
       </Position2>
       <Position3>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="160" TopLine="149"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="198" Column="20" TopLine="189"/>
       </Position3>
       <Position4>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="137" Column="20" TopLine="128"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="812" TopLine="807"/>
       </Position4>
       <Position5>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="168" TopLine="156"/>
+        <Filename Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Caret Line="126" Column="29" TopLine="110"/>
       </Position5>
       <Position6>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="169" TopLine="156"/>
+        <Filename Value="..\Source\Services\uTInject.pas"/>
+        <Caret Line="2295" TopLine="2291"/>
       </Position6>
       <Position7>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="170" TopLine="156"/>
+        <Filename Value="..\Source\Services\uTInject.pas"/>
+        <Caret Line="2298" TopLine="2291"/>
       </Position7>
       <Position8>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="171" TopLine="156"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="811" TopLine="807"/>
       </Position8>
       <Position9>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="172" TopLine="156"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="814" TopLine="807"/>
       </Position9>
       <Position10>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="173" TopLine="156"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="815" TopLine="807"/>
       </Position10>
       <Position11>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="174" TopLine="156"/>
+        <Filename Value="..\Source\Services\uTInject.pas"/>
+        <Caret Line="2332" TopLine="2322"/>
       </Position11>
       <Position12>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="175" TopLine="156"/>
+        <Filename Value="..\Source\Services\uTInject.pas"/>
+        <Caret Line="2333" TopLine="2322"/>
       </Position12>
       <Position13>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="116" TopLine="105"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="178" Column="21" TopLine="169"/>
       </Position13>
       <Position14>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="118" TopLine="105"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="712" TopLine="700"/>
       </Position14>
       <Position15>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="145" TopLine="135"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="693" TopLine="682"/>
       </Position15>
       <Position16>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="160" TopLine="149"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="694" TopLine="682"/>
       </Position16>
       <Position17>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="159" Column="27" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="696" TopLine="682"/>
       </Position17>
       <Position18>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="168" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="697" TopLine="682"/>
       </Position18>
       <Position19>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="169" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="698" TopLine="682"/>
       </Position19>
       <Position20>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="170" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="699" TopLine="682"/>
       </Position20>
       <Position21>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="171" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="700" TopLine="682"/>
       </Position21>
       <Position22>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="172" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Caret Line="126" Column="29" TopLine="110"/>
       </Position22>
       <Position23>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="173" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Caret Line="173" Column="27" TopLine="165"/>
       </Position23>
       <Position24>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="174" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="1605" TopLine="1594"/>
       </Position24>
       <Position25>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="175" TopLine="160"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="1606" TopLine="1594"/>
       </Position25>
       <Position26>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="116" TopLine="105"/>
+        <Filename Value="u_principal.pas"/>
+        <Caret Line="1419" TopLine="1409"/>
       </Position26>
       <Position27>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="119" Column="52" TopLine="105"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="1370" TopLine="1359"/>
       </Position27>
       <Position28>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="145" TopLine="135"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="1371" TopLine="1359"/>
       </Position28>
       <Position29>
-        <Filename Value="..\Source\Model\uTInject.JS.pas"/>
-        <Caret Line="160" TopLine="149"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="1377" TopLine="1359"/>
       </Position29>
       <Position30>
-        <Filename Value="..\Source\Services\uTInject.ConfigCEF.pas"/>
-        <Caret Line="386" Column="97" TopLine="374"/>
+        <Filename Value="..\Source\View\uTInject.Console.pas"/>
+        <Caret Line="1378" TopLine="1360"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -331,4 +487,911 @@
       <Modes Count="0" ActiveMode=""/>
     </RunParams>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="129">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1531"/>
+      </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1532"/>
+      </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1533"/>
+      </Item3>
+      <Item4>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1534"/>
+      </Item4>
+      <Item5>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1536"/>
+      </Item5>
+      <Item6>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1537"/>
+      </Item6>
+      <Item7>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1538"/>
+      </Item7>
+      <Item8>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1539"/>
+      </Item8>
+      <Item9>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1542"/>
+      </Item9>
+      <Item10>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1543"/>
+      </Item10>
+      <Item11>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1544"/>
+      </Item11>
+      <Item12>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1545"/>
+      </Item12>
+      <Item13>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1546"/>
+      </Item13>
+      <Item14>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1547"/>
+      </Item14>
+      <Item15>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1550"/>
+      </Item15>
+      <Item16>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1551"/>
+      </Item16>
+      <Item17>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1552"/>
+      </Item17>
+      <Item18>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1553"/>
+      </Item18>
+      <Item19>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1556"/>
+      </Item19>
+      <Item20>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1557"/>
+      </Item20>
+      <Item21>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1605"/>
+      </Item21>
+      <Item22>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1606"/>
+      </Item22>
+      <Item23>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1022"/>
+      </Item23>
+      <Item24>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1023"/>
+      </Item24>
+      <Item25>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1029"/>
+      </Item25>
+      <Item26>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1036"/>
+      </Item26>
+      <Item27>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1070"/>
+      </Item27>
+      <Item28>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1076"/>
+      </Item28>
+      <Item29>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1077"/>
+      </Item29>
+      <Item30>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1078"/>
+      </Item30>
+      <Item31>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1306"/>
+      </Item31>
+      <Item32>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1308"/>
+      </Item32>
+      <Item33>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1312"/>
+      </Item33>
+      <Item34>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1309"/>
+      </Item34>
+      <Item35>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1316"/>
+      </Item35>
+      <Item36>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1318"/>
+      </Item36>
+      <Item37>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1321"/>
+      </Item37>
+      <Item38>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1323"/>
+      </Item38>
+      <Item39>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1324"/>
+      </Item39>
+      <Item40>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1326"/>
+      </Item40>
+      <Item41>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1330"/>
+      </Item41>
+      <Item42>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1364"/>
+      </Item42>
+      <Item43>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1370"/>
+      </Item43>
+      <Item44>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1371"/>
+      </Item44>
+      <Item45>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1373"/>
+      </Item45>
+      <Item46>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1374"/>
+      </Item46>
+      <Item47>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1375"/>
+      </Item47>
+      <Item48>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1377"/>
+      </Item48>
+      <Item49>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="1378"/>
+      </Item49>
+      <Item50>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="988"/>
+      </Item50>
+      <Item51>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="169"/>
+      </Item51>
+      <Item52>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="170"/>
+      </Item52>
+      <Item53>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="171"/>
+      </Item53>
+      <Item54>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="172"/>
+      </Item54>
+      <Item55>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="161"/>
+      </Item55>
+      <Item56>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="162"/>
+      </Item56>
+      <Item57>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="153"/>
+      </Item57>
+      <Item58>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="154"/>
+      </Item58>
+      <Item59>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="155"/>
+      </Item59>
+      <Item60>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="132"/>
+      </Item60>
+      <Item61>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="133"/>
+      </Item61>
+      <Item62>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="134"/>
+      </Item62>
+      <Item63>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="135"/>
+      </Item63>
+      <Item64>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="136"/>
+      </Item64>
+      <Item65>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="137"/>
+      </Item65>
+      <Item66>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="144"/>
+      </Item66>
+      <Item67>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="143"/>
+      </Item67>
+      <Item68>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="147"/>
+      </Item68>
+      <Item69>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="145"/>
+      </Item69>
+      <Item70>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="112"/>
+      </Item70>
+      <Item71>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="114"/>
+      </Item71>
+      <Item72>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="117"/>
+      </Item72>
+      <Item73>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="116"/>
+      </Item73>
+      <Item74>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="119"/>
+      </Item74>
+      <Item75>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="120"/>
+      </Item75>
+      <Item76>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="121"/>
+      </Item76>
+      <Item77>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="122"/>
+      </Item77>
+      <Item78>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="125"/>
+      </Item78>
+      <Item79>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="127"/>
+      </Item79>
+      <Item80>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="126"/>
+      </Item80>
+      <Item81>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="107"/>
+      </Item81>
+      <Item82>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="104"/>
+      </Item82>
+      <Item83>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1323"/>
+      </Item83>
+      <Item84>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1324"/>
+      </Item84>
+      <Item85>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1325"/>
+      </Item85>
+      <Item86>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1160"/>
+      </Item86>
+      <Item87>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1161"/>
+      </Item87>
+      <Item88>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1162"/>
+      </Item88>
+      <Item89>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="142"/>
+      </Item89>
+      <Item90>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1413"/>
+      </Item90>
+      <Item91>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1415"/>
+      </Item91>
+      <Item92>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1416"/>
+      </Item92>
+      <Item93>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1419"/>
+      </Item93>
+      <Item94>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_principal.pas"/>
+        <Line Value="1420"/>
+      </Item94>
+      <Item95>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2306"/>
+      </Item95>
+      <Item96>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2308"/>
+      </Item96>
+      <Item97>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2312"/>
+      </Item97>
+      <Item98>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2313"/>
+      </Item98>
+      <Item99>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2316"/>
+      </Item99>
+      <Item100>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2318"/>
+      </Item100>
+      <Item101>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2321"/>
+      </Item101>
+      <Item102>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2320"/>
+      </Item102>
+      <Item103>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2324"/>
+      </Item103>
+      <Item104>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2325"/>
+      </Item104>
+      <Item105>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2329"/>
+      </Item105>
+      <Item106>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2332"/>
+      </Item106>
+      <Item107>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2333"/>
+      </Item107>
+      <Item108>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2310"/>
+      </Item108>
+      <Item109>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2295"/>
+      </Item109>
+      <Item110>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\Services\uTInject.pas"/>
+        <Line Value="2298"/>
+      </Item110>
+      <Item111>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="814"/>
+      </Item111>
+      <Item112>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="815"/>
+      </Item112>
+      <Item113>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="811"/>
+      </Item113>
+      <Item114>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="812"/>
+      </Item114>
+      <Item115>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="693"/>
+      </Item115>
+      <Item116>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="694"/>
+      </Item116>
+      <Item117>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="696"/>
+      </Item117>
+      <Item118>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="697"/>
+      </Item118>
+      <Item119>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="698"/>
+      </Item119>
+      <Item120>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="699"/>
+      </Item120>
+      <Item121>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="700"/>
+      </Item121>
+      <Item122>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="703"/>
+      </Item122>
+      <Item123>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="704"/>
+      </Item123>
+      <Item124>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="706"/>
+      </Item124>
+      <Item125>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="707"/>
+      </Item125>
+      <Item126>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="710"/>
+      </Item126>
+      <Item127>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="711"/>
+      </Item127>
+      <Item128>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.Console.pas"/>
+        <Line Value="712"/>
+      </Item128>
+      <Item129>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\View\uTInject.FrmQRCode.pas"/>
+        <Line Value="167"/>
+      </Item129>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>

@@ -95,9 +95,9 @@ type
 
 implementation
 
-uses uTInject.Constant, SysUtils, uTInject.ExePath, Forms,
+uses SysUtils, Dialogs, Windows, Forms,
      IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-     Windows, uTInject.ConfigCEF, Dialogs;
+     uTInject.Constant, uTInject.ExePath, uTInject.ConfigCEF;
 
 
 { TInjectAutoUpdate }

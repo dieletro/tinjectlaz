@@ -99,10 +99,10 @@ uses
 
 {$R *.dfm}
 
-procedure TFrmQRCode.FormClose(Sender: TObject; var {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
+procedure TFrmQRCode.FormClose(Sender: TObject; var {$IFDEF DELPHI}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
 begin
   if not FpodeFechar then
-  {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF} := caHide;
+  {$IFDEF DELPHI}Action{$ELSE} AAction{$ENDIF} := caHide;
 
   FTimerGetQrCode.Enabled := False;
 end;

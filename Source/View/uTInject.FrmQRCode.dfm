@@ -20,7 +20,6 @@ object FrmQRCode: TFrmQRCode
   OnHide = FormHide
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.6.0'
   object Timg_QrCode: TImage
     Left = 0
     Height = 304

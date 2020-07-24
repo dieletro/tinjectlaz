@@ -9,7 +9,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="..\Source\View"/>
-        <OtherUnitFiles Value="..\Source;..\Source\Model;..\Source\Services;..\Source\View;..\Source\LazUtils\GenericsCollections"/>
+        <OtherUnitFiles Value="..\Source;..\Source\Model;..\Source\Services;..\Source\View"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>

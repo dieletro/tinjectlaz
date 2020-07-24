@@ -5,7 +5,7 @@ interface
 uses
   {$IFDEF FPC}
     Classes,
-    Generics.Collections,
+   // Generics.Collections, //Não é necessária
     UrlMon,
     Windows,
     ExtCtrls,

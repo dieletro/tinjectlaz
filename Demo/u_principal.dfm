@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
-  Left = 204
+  Left = 324
   Height = 471
-  Top = 118
+  Top = 158
   Width = 974
   Caption = 'Demo TInject'
   ClientHeight = 471
@@ -13,7 +13,6 @@ object frmPrincipal: TfrmPrincipal
   OnClose = FormClose
   OnCreate = FormCreate
   Position = poOwnerFormCenter
-  LCLVersion = '2.0.6.0'
   object Lbl_Avisos: TLabel
     Left = 0
     Height = 13
@@ -2025,7 +2024,6 @@ object frmPrincipal: TfrmPrincipal
     top = 94
   end
   object TInject1: TInject
-    InjectJS.AutoUpdate = False
     InjectJS.AutoUpdateTimeOut = 20
     Config.AutoDelay = 30
     Config.ReceiveAttachmentAuto = False

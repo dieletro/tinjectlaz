@@ -40,7 +40,7 @@ uses
     Dialogs,
     MaskUtils,
     UiTypes,
-    Generics.Collections,
+   // Generics.Collections,
     TypInfo,
     DB,
     ExtCtrls,
@@ -265,7 +265,7 @@ procedure Register;
 implementation
 
 uses
-  uCEFTypes,   uTInject.ConfigCEF, Windows, Messages,
+  uCEFTypes, uTInject.ConfigCEF, Windows, Messages,
   uCEFConstants,
   {$ifdef delphi}
     Datasnap.DBClient, Vcl.WinXCtrls, System.NetEncoding,
@@ -310,7 +310,6 @@ begin
 
   Result := FrmConsole.ConfigureNetWork;
 end; }
-
 
 procedure TInject.AProcSincCheckDelivered;
 begin
@@ -1659,10 +1658,8 @@ end;
 procedure TInject.SendFile(PNumberPhone: string;
   const PFileName: String; PMessage: string);
 var
-  {$IFNDEF FPC}
-    lThread : TThread;
-  {$ENDIF}
   {$ifdef delphi}
+    lThread     : TThread;
     LStream     : TMemoryStream;
     LBase64File : TBase64Encoding;
   {$else}
@@ -2230,7 +2227,7 @@ Var
   LForm  : Tform;
   LPanel1: Tpanel;
   LAbel1 : TLabel;
-  {$IFNDEF FPC}LActivityIndicator1: TActivityIndicator;{$ENDIF}
+  {$IFDEF DELPHI}LActivityIndicator1: TActivityIndicator;{$ENDIF}
 begin
   if PWarning then
   Begin
@@ -2248,18 +2245,18 @@ begin
     LForm.Width                       := 298;
     LForm.Position                    := poScreenCenter;
     LForm.Visible                     := False;
-    LForm.OnCloseQuery                := {$IFNDEF FPC}OnCLoseFrmInt{$ELSE}@OnCLoseFrmInt{$ENDIF};
+    LForm.OnCloseQuery                := {$IFDEF DELPHI}OnCLoseFrmInt{$ELSE}@OnCLoseFrmInt{$ENDIF};
 
     LPanel1                           := Tpanel.Create(LForm);
     LPanel1.Parent                    := LForm;
-    {$IFNDEF FPC}
+    {$IFDEF DELPHI}
     LPanel1.ShowCaption               := False;
     {$ENDIF}
     LPanel1.BevelOuter                := bvNone;
     LPanel1.Width                     := 81;
     LPanel1.Align                     := alLeft;
 
-    {$IFNDEF FPC}
+    {$IFDEF DELPHI}
       LActivityIndicator1               := TActivityIndicator.Create(LPanel1);
       LActivityIndicator1.Parent        := LPanel1;
       LActivityIndicator1.IndicatorSize := aisXLarge;
@@ -2278,8 +2275,8 @@ begin
     LAbel1.Font.Size                  := 10;
     LAbel1.WordWrap                   := True;
     LAbel1.Caption                    := Text_FrmClose_Label;
-    {$IFNDEF FPC}
-    LAbel1.AlignWithMargins           := true;
+    {$IFDEF DELPHI}
+      LAbel1.AlignWithMargins           := true;
     {$ENDIF}
     LForm.Visible                     := True;
     Application.MainForm.Visible      := False;
@@ -2312,7 +2309,7 @@ begin
 
   if Status in [Inject_Destroying, Server_Disconnecting] then
   Begin
-    Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(MSG_WarningQrCodeStart1), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
+    Application.MessageBox({$IFDEF DELPHI}PwideChar{$ELSE} PChar{$ENDIF}(MSG_WarningQrCodeStart1), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
     Exit;
   end;
 
@@ -2320,7 +2317,7 @@ begin
   Begin
     if not ConsolePronto then
     Begin
-      Application.MessageBox({$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(MSG_ConfigCEF_ExceptConsoleNaoPronto), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
+      Application.MessageBox({$IFDEF DELPHI}PwideChar{$ELSE} PChar{$ENDIF}(MSG_ConfigCEF_ExceptConsoleNaoPronto), {$IFNDEF FPC}PwideChar{$ELSE} PChar{$ENDIF}(Application.Title), MB_ICONERROR + mb_ok);
       Exit;
     end;
     //Reseta o FORMULARIO

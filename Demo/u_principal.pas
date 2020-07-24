@@ -3,7 +3,7 @@
 interface
 
 uses
-  {$IFNDEF FPC}
+  {$IFDEF DELPHI}
   Winapi.Windows,
   Winapi.Messages,
   System.SysUtils,
@@ -185,7 +185,7 @@ type
     SpeedButton4: TSpeedButton;
     Label11: TLabel;
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
+    procedure FormClose(Sender: TObject; var {$IFDEF DELPHI}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
     procedure btSendTextClick(Sender: TObject);
     procedure btSendTextAndFileClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -297,7 +297,7 @@ procedure TfrmPrincipal.FormCreate(Sender: TObject);
 var
   I: Integer;
 begin
-  {$IFNDEF FPC}
+  {$IFDEF DELPHI}
     ReportMemoryLeaksOnShutdown  := false;
   {$ENDIF}
   PageControl1.ActivePageIndex := 0;
@@ -368,7 +368,7 @@ begin
   item.ImageIndex := 0;
 end;
 
-procedure TfrmPrincipal.FormClose(Sender: TObject; var {$IFNDEF FPC}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
+procedure TfrmPrincipal.FormClose(Sender: TObject; var {$IFDEF DELPHI}Action{$ELSE} AAction{$ENDIF}: TCloseAction);
 begin
   TInject1.ShutDown;
 //  FreeAndNil(GlobalCEFApp);
@@ -475,8 +475,6 @@ begin
 
 
 end;
-
-
 
  Funcao nao utilizada
 function DownloadArquivo(const Origem, Destino: String): Boolean;
@@ -948,7 +946,7 @@ begin
 
   listaParticipantes.Clear;
 
-  for i := 0 to ArrayRows.{$IFNDEF FPC}Size{$ELSE}Count{$ENDIF}  - 1 do
+  for i := 0 to ArrayRows.{$IFDEF DELPHI}Size{$ELSE}Count{$ENDIF}  - 1 do
   begin
     AddGroupContacts(ArrayRows.Items[i].value)
   end;
@@ -1080,7 +1078,7 @@ var
   LInput: TMemoryStream;
   LOutput: TMemoryStream;
   AStr: TStringList;
-  {$IFNDEF FPC}
+  {$IFDEF DELPHI}
     lThread : TThread;
   {$ENDIF}
 
@@ -1118,7 +1116,7 @@ var
   end;
   {$ENDIF}
 begin
- {$IFNDEF FPC}
+ {$IFDEF DELPHI}
  lThread := TThread.CreateAnonymousThread(
  procedure
  begin
