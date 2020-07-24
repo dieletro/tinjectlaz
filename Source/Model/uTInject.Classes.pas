@@ -71,7 +71,6 @@ uses
     Vcl.Imaging.jpeg,
     System.Classes,
     System.IOUtils,
-
     {$IFDEF DELPHI25_UP}
        Vcl.IdAntiFreeze,
      {$ENDIF}

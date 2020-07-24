@@ -39,7 +39,7 @@ uses
   uTInject.Classes, uCSV.Import, uTInject.Diversos;
 
 {$M+}{$TYPEINFO ON}
-{$I cef.inc}
+{$I ..\TInjectDiretiva.inc}
 
 type
     TInjectJSDefine  = class
@@ -131,7 +131,12 @@ begin
         FJSScript.Clear;
       End else
       Begin
-        FJSVersion   := FInjectJSDefine.FVersion_JS;
+        FJSVersion   := FInjectJSDefine.
+           {$IFNDEF FPC}
+             FVersion_JS;
+           {$ELSE}
+             Version_JS;
+           {$ENDIF}
         if FJSVersion = '' then
            FJSScript.Clear;
       End;
@@ -143,10 +148,10 @@ begin
       //Atualzia o arquivo interno
       GlobalCEFApp.UpdateDateIniFile;
       if UpperCase(GlobalCEFApp.PathJs) <> UpperCase(Ltmp) then
-         FJSScript.{$IFNDEF FPC}
-           SaveToFile(GlobalCEFApp.PathJs, TEncoding.UTF8);
+         {$IFNDEF FPC}
+           FJSScript.SaveToFile(GlobalCEFApp.PathJs, TEncoding.UTF8);
          {$ELSE}
-           SaveToFile(GlobalCEFApp.PathJs);
+           FJSScript.SaveToFile(GlobalCEFApp.PathJs);
          {$ENDIF}
       if Assigned(FOnUpdateJS) Then
          FOnUpdateJS(Self);
@@ -162,7 +167,7 @@ constructor TInjectJS.Create(POwner: TComponent);
 begin
   Owner                      := POwner;
   FAutoUpdateTimeOut         := 10;
-  FJSScript                  := TstringList.create;
+  FJSScript                  := TStringList.create;
   FAutoUpdate                := True;
   FJSURL                     := TInjectJS_JSUrlPadrao;
   FInjectJSDefine            := TInjectJSDefine.Create;
